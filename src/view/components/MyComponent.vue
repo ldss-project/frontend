@@ -5,6 +5,5 @@
 </template>
 
 <style lang="scss" scoped>
-  $my-blue: blue;
-  p { color: $my-blue; }
+  p { color: $my-primary-color; }
 </style>
