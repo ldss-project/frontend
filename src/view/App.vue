@@ -5,10 +5,11 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav>
-      <RouterLink to="/">Homepage</RouterLink> |
-      <RouterLink :to="{ name: 'not-found' }">Not a page </RouterLink>
+      <RouterLink class="btn btn-link" to="/">Homepage</RouterLink>
+      <RouterLink class="btn btn-link" :to="{ name: 'not-found' }">Not a page </RouterLink>
     </nav>
   </header>
+  <hr>
 
   <RouterView />
 </template>
