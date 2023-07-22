@@ -20,7 +20,7 @@ const router = createRouter({
     { path: '/sign-in', name: 'sign-in', component: SignInPage },
     { path: '/create-game', name: 'create-game', component: CreateGamePage },
     { path: '/join-game', name: 'join-game', component: JoinGamePage },
-    { path: '/game', name: 'create-game', component: GamePage },
+    { path: '/game', name: 'game', component: GamePage },
     { path: '/profile', name: 'profile', component: ProfilePage },
     { path: '/statistics', name: 'statistics', component: StatisticsPage },
     { path: '/leaderboard', name: 'leaderboard', component: LeaderboardPage },
