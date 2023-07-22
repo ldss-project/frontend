@@ -4,7 +4,9 @@
   $palette-dark-secondary: #4D4D4D;
   $palette-dark-tertiary: #E6E6E6;
   $palette-dark-border: #000000;
-  $palette-dark-text-info: #FFFFFF;
+  $palette-dark-text-primary: #FFFFFF;
+  $palette-dark-text-secondary: #FFFFFF;
+  $palette-dark-text-tertiary: #000000;
   $palette-dark-text-error: #FF0000;
   $palette-dark-graph: #007FFF;
 
@@ -14,3 +16,20 @@
   $palette-chessboard-piece-selected: #D5E8D4;
   $palette-chessboard-capture: #FF6666;
   $palette-chessboard-last-move: #FFFF99;
+
+// Sizes
+$size-nav-bar: 150px;
+$size-button: 50px;
+$size-icon: 25px;
+$size-border: 2px;
+
+// Borders
+$border-palette-dark: $size-border solid $palette-dark-border;
+
+// Style
+* {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
