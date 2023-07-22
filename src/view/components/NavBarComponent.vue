@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import NavBarLink from "@/view/components/NavBarLink.vue";
-import NavBarLogo from "@/view/components/NavBarLogo.vue";
+import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 
 // TODO Find if the user is a guest or is authenticated
 const isGuest = false
@@ -21,15 +20,23 @@ function links() { return isGuest ? guestLinks : userLinks }
 </script>
 
 <template>
-  <div class="nav-bar">
-    <NavBarLogo :to="{ name: 'homepage' }"/>
-    <NavBarLink v-for="link in links()" :to="link.to">{{ link.text }}</NavBarLink>
-  </div>
+  <ButtonLinkComponent :to="{ name: 'homepage' }">
+    <img class="logo" src="/icon/favicon.ico" alt="Chess Logo">Chess Game
+  </ButtonLinkComponent>
+  <ButtonLinkComponent v-for="link in links()" :key="link.to.name" :to="link.to">
+    {{ link.text }}
+  </ButtonLinkComponent>
 </template>
 
 <style lang="scss" scoped>
-  .nav-bar {
-    height: 100%;
-    border: $border-palette-dark;
+  .button {
+    border-width: 0 0 $size-border 0;
+    border-radius: 0;
+  }
+
+  .logo {
+    height: $size-icon;
+    width: $size-icon;
+    margin-right: 5px;
   }
 </style>

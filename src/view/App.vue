@@ -1,15 +1,15 @@
-<style lang="scss"> @import "src/assets/global"; </style>
+<style lang="scss">@import "../assets/global";</style>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import NavBar from "@/view/components/NavBar.vue";
+import NavBarComponent from "@/view/components/NavBarComponent.vue";
 </script>
 
 <template>
   <div class="application">
     <header>
       <nav>
-        <NavBar />
+        <NavBarComponent />
       </nav>
     </header>
     <main>
@@ -20,22 +20,20 @@ import NavBar from "@/view/components/NavBar.vue";
 
 <style lang="scss" scoped>
   .application {
-    display: flex;
-    flex-direction: row;
+    @extend .flex-row;
     height: 100vh;
     width: 100vw;
   }
   header {
-    display: flex;
-    flex-direction: column;
+    @extend .flex-column;
     position: absolute;
     z-index: 9000;
     width: $size-nav-bar;
+    border: $border-palette-dark;
     background-color: $palette-dark-primary;
   }
   main {
-    display: flex;
-    flex-direction: column;
+    @extend .flex-column, .flex-center-content;
     position: relative;
     padding-left: $size-nav-bar;
     background-color: $palette-dark-secondary;
