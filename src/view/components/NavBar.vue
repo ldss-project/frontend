@@ -3,7 +3,7 @@ import NavBarLink from "@/view/components/NavBarLink.vue";
 import NavBarLogo from "@/view/components/NavBarLogo.vue";
 
 // TODO Find if the user is a guest or is authenticated
-const isGuest = true
+const isGuest = false
 
 const guestLinks = [
   { to: { name: "log-in" }, text: "Log in" },
