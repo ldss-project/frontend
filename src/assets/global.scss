@@ -1,2 +1,16 @@
 // Colors
-$my-primary-color: blue;
+  // Dark Palette
+  $palette-dark-primary: #333333;
+  $palette-dark-secondary: #4D4D4D;
+  $palette-dark-tertiary: #E6E6E6;
+  $palette-dark-border: #000000;
+  $palette-dark-text-info: #FFFFFF;
+  $palette-dark-text-error: #FF0000;
+  $palette-dark-graph: #007FFF;
+
+  // Chess Board Palette
+  $palette-chessboard-primary: #F9D19D;
+  $palette-chessboard-secondary: #D18C47;
+  $palette-chessboard-piece-selected: #D5E8D4;
+  $palette-chessboard-capture: #FF6666;
+  $palette-chessboard-last-move: #FFFF99;
