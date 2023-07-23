@@ -1,7 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+withDefaults(defineProps<{
+  type?: string
+}>(), {
+  type: "button"
+})
+</script>
 
 <template>
-  <button class="button" type="button">
+  <button class="button" :type="type">
     <slot />
   </button>
 </template>
@@ -11,16 +17,25 @@
     @extend .flex-row, .flex-center-content;
     height: $size-button;
     border: $border-palette-dark;
-    border-radius: $size-border-radius;
-    background-color: $palette-dark-primary;
+    border-radius: $size-button-border-radius;
     font-weight: bold;
+    &:hover { cursor: pointer; }
+  }
+
+</style>
+
+<style lang="scss">
+  .button-primary {
+    background-color: $palette-dark-primary;
     color: $palette-dark-text-primary;
+    &:hover { background-color: $palette-dark-primary-hover; }
+    &:active { background-color: $palette-dark-primary-active; }
   }
-  .button:hover {
-    cursor: pointer;
-    background-color: $palette-dark-primary-hover;
-  }
-  .button:active {
-    background-color: $palette-dark-secondary;
+
+  .button-tertiary {
+    background-color: $palette-dark-tertiary;
+    color: $palette-dark-text-tertiary;
+    &:hover { background-color: $palette-dark-tertiary-hover; }
+    &:active { background-color: $palette-dark-tertiary-active; }
   }
 </style>

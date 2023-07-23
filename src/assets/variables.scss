@@ -1,7 +1,6 @@
 // Colors
   // Dark Palette
   $palette-dark-primary: #333333;
-  $palette-dark-primary-hover: #222222;
   $palette-dark-secondary: #4D4D4D;
   $palette-dark-tertiary: #E6E6E6;
   $palette-dark-border: #000000;
@@ -11,6 +10,11 @@
   $palette-dark-text-error: #FF0000;
   $palette-dark-graph: #007FFF;
 
+  $palette-dark-primary-hover: #222222;
+  $palette-dark-primary-active: $palette-dark-secondary;
+  $palette-dark-tertiary-hover: #D5D5D5;
+  $palette-dark-tertiary-active: #F7F7F7;
+
   // Chess Board Palette
   $palette-chessboard-primary: #F9D19D;
   $palette-chessboard-secondary: #D18C47;
@@ -19,11 +23,13 @@
   $palette-chessboard-last-move: #FFFF99;
 
 // Sizes
-$size-nav-bar: 150px;
-$size-button: 50px;
-$size-icon: 25px;
-$size-border: 2px;
-$size-border-radius: 8px;
+$size-nav-bar: 10rem;
+$size-button: 3rem;
+$size-icon: 2rem;
+$size-border: 0.1rem;
+$size-button-border-radius: 0.5rem;
+$size-form-border-radius: 2rem;
+$size-margin: 0.5rem;
 
 // Borders
 $border-palette-dark: $size-border solid $palette-dark-border;
