@@ -2,7 +2,7 @@
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 
 // TODO Find if the user is a guest or is authenticated
-const isGuest = false
+const isGuest = true
 
 const guestLinks = [
   { to: { name: "log-in" }, text: "Log in" },
@@ -20,16 +20,18 @@ function links() { return isGuest ? guestLinks : userLinks }
 </script>
 
 <template>
-  <ButtonLinkComponent :to="{ name: 'homepage' }">
-    <img class="logo" src="/icon/favicon.ico" alt="Chess Logo">Chess Game
-  </ButtonLinkComponent>
-  <ButtonLinkComponent v-for="link in links()" :key="link.to.name" :to="link.to">
-    {{ link.text }}
-  </ButtonLinkComponent>
+  <nav class="nav-bar">
+    <ButtonLinkComponent class="button-primary" :to="{ name: 'homepage' }">
+      <img class="logo" src="/icon/favicon.ico" alt="Chess Logo">Chess Game
+    </ButtonLinkComponent>
+    <ButtonLinkComponent class="button-primary" v-for="link in links()" :key="link.to.name" :to="link.to">
+      {{ link.text }}
+    </ButtonLinkComponent>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
-  .button {
+  .button-link {
     border-width: 0 0 $size-border 0;
     border-radius: 0;
   }
@@ -37,6 +39,6 @@ function links() { return isGuest ? guestLinks : userLinks }
   .logo {
     height: $size-icon;
     width: $size-icon;
-    margin-right: 5px;
+    margin-right: $size-margin;
   }
 </style>
