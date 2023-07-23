@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import {RouterLink} from "vue-router";
+import {RouteLocationRaw} from "vue-router";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
-defineProps(['to'])
+
+defineProps<{
+  to: RouteLocationRaw
+}>()
 </script>
 
 <template>
-  <ButtonComponent>
-    <RouterLink :to="to">
-      <slot />
-    </RouterLink>
+  <ButtonComponent class="button-link" @click="this.$router.push(to)">
+    <slot />
   </ButtonComponent>
 </template>
 
-<style lang="scss" scoped>
-  a {
-    @extend .flex-row, .flex-center-content;
-    text-decoration: none;
-    color: $palette-dark-text-primary;
-  }
-</style>
+<style lang="scss" scoped></style>
