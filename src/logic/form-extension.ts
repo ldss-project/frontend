@@ -1,10 +1,25 @@
 /**
+ * The minimum length for the usernames in the application.
+ */
+const usernameMinLength: number = 3
+/**
+ * The minimum length for the passwords in the application.
+ */
+const passwordMinLength: number = 8
+/**
+ * The standard email format of the application.
+ */
+const emailRegex: RegExp =
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+
+/**
  * Possible causes of errors in the forms of the application.
  */
 export enum FormCauses {
   Username = "username",
   Email = "email",
   Password = "password",
+  GameId = "gameId",
 }
 
 /**
@@ -45,18 +60,13 @@ export class FormError {
  *         if the validation failed, undefined otherwise.
  */
 export function validateUsername(username: string | undefined): FormError | undefined {
-  if (username === undefined) {
+  const field = username?.trim();
+  if (field === undefined || field === "") {
     return new FormError(FormCauses.Username, "Username required.")
-  } else if (username.length < 3) {
+  } else if (field.length < usernameMinLength) {
     return new FormError(FormCauses.Username, "Username should be at least 3 characters long.")
   }
 }
-
-/**
- * The standard email format of the application.
- */
-const emailRegex: RegExp =
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
 
 /**
  * Validate the specified email against the standard format of the
@@ -67,10 +77,10 @@ const emailRegex: RegExp =
  *         if the validation failed, undefined otherwise.
  */
 export function validateEmail(email: string | undefined): FormError | undefined {
-  console.log(email)
-  if (email === undefined) {
+  const field = email?.trim();
+  if (field === undefined || field === "") {
     return new FormError(FormCauses.Email, "Email required.")
-  } else if (email.toLowerCase().match(emailRegex) === null) {
+  } else if (field.toLowerCase().match(emailRegex) === null) {
     return new FormError(FormCauses.Email, "Incorrect email format.")
   }
 }
@@ -91,15 +101,32 @@ export function validatePassword(
   requireConfirmation: boolean = false,
   confirmation: string | undefined = "",
 ): FormError | undefined {
-  if (password === undefined){
+  const field = password?.trim()
+  const fieldConfirmation = confirmation?.trim()
+  if (field === undefined || field === ""){
     return new FormError(FormCauses.Password, "Password Required.")
-  } else if (password.length < 8){
+  } else if (field.length < passwordMinLength){
     return new FormError(FormCauses.Password, "Password should be at least 8 characters long.")
   } else if (!requireConfirmation) {
     return;
-  } else if (confirmation === undefined){
+  } else if (fieldConfirmation === undefined || fieldConfirmation === ""){
     return new FormError(FormCauses.Password, "Password confirmation required.")
-  } else if (confirmation !== password){
+  } else if (fieldConfirmation !== field){
     return new FormError(FormCauses.Password, "Password confirmation does not match the original password.")
+  }
+}
+
+/**
+ * Validate the specified game identifier against the standard format of the
+ * application.
+ *
+ * @param gameId the specified game identifier.
+ * @return a {@link FormError} caused by a {@link FormCauses.GameId}
+ *         if the validation failed, undefined otherwise.
+ */
+export function validateGameId(gameId: string | undefined): FormError | undefined {
+  const field = gameId?.trim()
+  if (field === undefined || field === ""){
+    return new FormError(FormCauses.GameId, "Game Identifier Required.")
   }
 }
