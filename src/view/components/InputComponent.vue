@@ -6,8 +6,10 @@ const props = defineProps<{
   type: string,
   placeholder?: string,
   hiddenLabel?: boolean,
-  valid?: boolean,
+  invalid?: boolean,
+  modelValue: any
 }>()
+defineEmits(['update:modelValue'])
 
 const capitalizedName: string = capitalize(props.name)
 </script>
@@ -22,11 +24,12 @@ const capitalizedName: string = capitalize(props.name)
     >{{ capitalizedName }}</label>
     <input
       class="form-control"
-      :class="{ 'is-invalid': valid !== true }"
+      :class="{ 'is-invalid': invalid === true }"
       :type="type"
       :id="name"
       :placeholder="placeholder ?? capitalizedName"
       v-bind="$attrs"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
   </div>
 </template>
