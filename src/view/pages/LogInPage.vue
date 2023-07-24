@@ -4,12 +4,27 @@ import InputComponent from "@/view/components/InputComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
+import {FormCauses, FormError, validatePassword, validateUsername} from "@/logic/form-extension";
 import {ref} from "vue";
 
-const error = ref<{
-  input: "username" | "password",
-  message: string,
-}>()
+const username = ref<string>()
+const password = ref<string>()
+const error = ref<FormError>()
+
+function onSubmit(event: Event){
+  event.preventDefault()
+  if (validateForm()) {
+    console.log("VALIDATED")
+    // TODO call login on authentication service
+  }
+}
+
+function validateForm(): boolean {
+  error.value =
+    validateUsername(username.value) ??
+    validatePassword(password.value, false)
+  return error.value === undefined
+}
 </script>
 
 <template>
@@ -17,22 +32,22 @@ const error = ref<{
     <InputComponent
       name="username"
       type="text"
-      :valid="error?.input !== 'username'"
+      v-model="username"
+      :invalid="error?.hasCause(FormCauses.Username)"
       hidden-label
       autocomplete="on"
-      required
     />
     <InputComponent
       name="password"
       type="password"
-      :valid="error?.input !== 'password'"
+      v-model="password"
+      :invalid="error?.hasCause(FormCauses.Password)"
       hidden-label
       autocomplete="on"
-      required
     />
     <ErrorText
       v-if="error"
-      :text="error.message"
+      :text="error?.message"
     />
     <div class="form-actions">
       <ButtonLinkComponent
@@ -42,6 +57,7 @@ const error = ref<{
       <ButtonComponent
         class="button-primary"
         type="submit"
+        @click="onSubmit($event)"
       >Log In</ButtonComponent>
     </div>
   </FormComponent>
