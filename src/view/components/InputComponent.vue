@@ -36,7 +36,7 @@ const capitalizedName: string = capitalize(props.name)
 
 <style lang="scss" scoped>
   .input {
+    @extend .flex-column;
     margin-bottom: $size-margin * 2;
-    label, input { height: fit-content }
   }
 </style>

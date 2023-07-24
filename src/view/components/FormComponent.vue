@@ -11,6 +11,7 @@
     @extend .flex-column, .flex-center-content;
     height: fit-content;
     width: fit-content;
+    margin: $size-margin;
     padding: $size-form-border-radius;
     border: $border-palette-dark;
     border-radius: $size-form-border-radius;

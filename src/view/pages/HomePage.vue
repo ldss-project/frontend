@@ -10,6 +10,10 @@ import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 <style lang="scss" scoped>
   .button {
     width: 30%;
-    margin: $size-margin;
+    margin: $size-margin 0;
+  }
+
+  @media screen and (max-width: 992px) {
+    .button { width: 60%; }
   }
 </style>
