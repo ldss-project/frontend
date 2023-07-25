@@ -6,8 +6,6 @@
 
 <style lang="scss" scoped>
   h1 {
-    height: fit-content;
-    width: fit-content;
     margin: $size-margin;
     padding: $size-padding;
     font-weight: bold;

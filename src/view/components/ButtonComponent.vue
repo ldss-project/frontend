@@ -16,12 +16,12 @@ withDefaults(defineProps<{
   .button {
     @extend .flex-row, .flex-center-content;
     height: $size-button;
+    width: 100%;
     border: $border-palette-dark;
     border-radius: $size-button-border-radius;
     font-weight: bold;
     &:hover { cursor: pointer; }
   }
-
 </style>
 
 <style lang="scss">
