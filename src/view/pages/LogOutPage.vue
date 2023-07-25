@@ -1,7 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {onMounted} from "vue";
+import router from "@/router";
 
-<template>
-  <p>Log Out Page</p>
-</template>
+onMounted(() => {
+  // TODO call log out on authentication service
+  router.push({ name: 'homepage'})
+})
+</script>
+
+<template></template>
 
 <style lang="scss" scoped></style>
