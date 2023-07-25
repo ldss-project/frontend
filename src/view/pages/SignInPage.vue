@@ -18,7 +18,7 @@ function onSubmit(event: Event){
   console.log(form.value)
   if (validateForm()) {
     console.log("VALIDATED")
-    // TODO call login on authentication service
+    // TODO call sign in on authentication service
   }
 }
 

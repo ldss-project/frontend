@@ -11,14 +11,14 @@ const form = ref({
 
 function joinPublicGame(event: Event) {
   event.preventDefault()
-  // TODO join game private
+  // TODO join public game
 }
 
 function joinPrivateGame(event: Event) {
   event.preventDefault()
   console.log(form.value)
   if (validateForm()){
-    // TODO join game private
+    // TODO join private game
   }
 }
 

@@ -21,7 +21,7 @@ const router = createRouter({
     { path: '/create-game', name: 'create-game', component: CreateGamePage },
     { path: '/join-game', name: 'join-game', component: JoinGamePage },
     { path: '/game', name: 'game', component: GamePage },
-    { path: '/profile', name: 'profile', component: ProfilePage },
+    { path: '/profile/:userId', name: 'profile', component: ProfilePage },
     { path: '/statistics', name: 'statistics', component: StatisticsPage },
     { path: '/leaderboard', name: 'leaderboard', component: LeaderboardPage },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundPage },
