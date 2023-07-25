@@ -3,13 +3,13 @@ import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
-import {FormCauses, FormError, validatePassword, validateUsername} from "@/logic/form-extension";
+import {FormCauses, FormError, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
 import {ref} from "vue";
 
 const form = ref({
   username: "",
   password: "",
-  error: undefined as FormError | undefined,
+  error: FormError.none,
 })
 
 function onSubmit(event: Event){
@@ -25,7 +25,7 @@ function validateForm(): boolean {
   form.value.error =
     validateUsername(form.value.username) ??
     validatePassword(form.value.password, false)
-  return form.value.error === undefined
+  return form.value.error === FormError.none
 }
 </script>
 
