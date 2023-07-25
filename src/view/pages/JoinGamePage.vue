@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
-import InputComponent from "@/view/components/InputComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {ref} from "vue";
 import {FormCauses, FormError, validateGameId} from "@/logic/form-extension";
 
-const gameId = ref<string>()
-const error = ref<FormError>()
+const form = ref({
+  gameId: "",
+  error: undefined as FormError | undefined,
+})
 
 function joinPublicGame(event: Event) {
   event.preventDefault()
@@ -15,14 +16,15 @@ function joinPublicGame(event: Event) {
 
 function joinPrivateGame(event: Event) {
   event.preventDefault()
+  console.log(form.value)
   if (validateForm()){
     // TODO join game private
   }
 }
 
 function validateForm(){
-  error.value = validateGameId(gameId.value)
-  return error.value === undefined
+  form.value.error = validateGameId(form.value.gameId)
+  return form.value.error === undefined
 }
 </script>
 
@@ -38,19 +40,24 @@ function validateForm(){
       type="submit"
       @click="joinPrivateGame($event)"
     >Join Private Game</ButtonComponent>
-    <InputComponent
-      name="gameId"
-      v-model="gameId"
-      type="text"
-      placeholder="Game Id"
-      :invalid="error?.hasCause(FormCauses.GameId)"
-      hidden-label
-    />
+    <div class="input">
+      <label
+        class="form-label visually-hidden"
+        for="gameId"
+        aria-label="Private Game Identifier"
+      >Private Game Identifier</label>
+      <input
+        class="form-control"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.GameId) }"
+        id="gameId"
+        type="text"
+        placeholder="Game Id"
+        autocomplete="off"
+        v-model="form.gameId"
+      />
+    </div>
   </form>
-  <ErrorText
-    v-if="error"
-    :text="error?.message"
-  />
+  <ErrorText v-if="form.error" :text="form.error?.message" />
 </template>
 
 <style lang="scss" scoped>
@@ -70,7 +77,8 @@ function validateForm(){
     .button {
       border-radius: $size-button-border-radius 0 0 $size-button-border-radius;
     }
-    .input:deep(input){
+    .input input{
+      height: $size-button;
       border-radius: 0 $size-button-border-radius $size-button-border-radius 0;
     }
   }

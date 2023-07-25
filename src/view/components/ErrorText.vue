@@ -10,6 +10,7 @@ defineProps<{
 
 <style lang="scss" scoped>
   .error-text {
+    width: 100%;
     margin-bottom: $size-margin * 2;
     color: $palette-dark-text-error;
   }
