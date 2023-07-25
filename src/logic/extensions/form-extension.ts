@@ -32,6 +32,9 @@ export class FormError {
   /** A description of the error. */
   readonly message: string
 
+  /** An undefined {@link FormError}. */
+  static none: FormError | undefined = undefined
+
   /**
    * Create a new {@link FormError} with the specified cause and description.
    * @param cause the specified cause.

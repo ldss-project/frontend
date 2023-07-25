@@ -2,11 +2,11 @@
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {ref} from "vue";
-import {FormCauses, FormError, validateGameId} from "@/logic/form-extension";
+import {FormCauses, FormError, validateGameId} from "@/logic/extensions/form-extension";
 
 const form = ref({
   gameId: "",
-  error: undefined as FormError | undefined,
+  error: FormError.none,
 })
 
 function joinPublicGame(event: Event) {
@@ -24,7 +24,7 @@ function joinPrivateGame(event: Event) {
 
 function validateForm(){
   form.value.error = validateGameId(form.value.gameId)
-  return form.value.error === undefined
+  return form.value.error === FormError.none
 }
 </script>
 

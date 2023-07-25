@@ -1,6 +1,6 @@
 <script setup lang="ts" xmlns="http://www.w3.org/1999/html">
 import FormComponent from "@/view/components/FormComponent.vue";
-import {FormCauses, FormError, validateDuration, validateGameId} from "@/logic/form-extension";
+import {FormCauses, FormError, validateDuration, validateGameId} from "@/logic/extensions/form-extension";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import {TimeConstraints} from "@/logic/data/time-constraint";
@@ -11,7 +11,7 @@ const form = ref({
   timeMinutes: 5,
   isPrivate: false,
   gameId: "",
-  error: undefined as FormError | undefined
+  error: FormError.none
 })
 
 const timeConstraintOptions = [
@@ -34,7 +34,7 @@ function validateForm(){
   form.value.error =
     validateDuration(form.value.timeMinutes) ??
     validateGameId(form.value.gameId, form.value.isPrivate)?.withMessage("Game identifier required for a private game.")
-  return form.value.error === undefined
+  return form.value.error === FormError.none
 }
 function hasTimeConstraint(): boolean { return form.value.timeConstraint !== TimeConstraints.NoLimit }
 function isPrivate(): boolean { return form.value.isPrivate }
