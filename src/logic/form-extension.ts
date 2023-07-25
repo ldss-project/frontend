@@ -20,6 +20,7 @@ export enum FormCauses {
   Email = "email",
   Password = "password",
   GameId = "gameId",
+  Time = "time",
 }
 
 /**
@@ -42,6 +43,12 @@ export class FormError {
   }
 
   /**
+   * @param message the specified description.
+   * @return a new {@link FormError} with the same cause as this one, but with the specified
+   *         description.
+   */
+  public withMessage(message: string): FormError { return new FormError(this.cause, message) }
+  /**
    * @param cause the specified cause.
    * @return true if this error was caused by the specified cause; false otherwise.
    */
@@ -59,13 +66,13 @@ export class FormError {
  * @return a {@link FormError} caused by a {@link FormCauses.Username}
  *         if the validation failed, undefined otherwise.
  */
-export function validateUsername(username: string | undefined): FormError | undefined {
+export function validateUsername(username: string): FormError | undefined {
   const field = username?.trim();
-  if (field === undefined || field === "") {
-    return new FormError(FormCauses.Username, "Username required.")
-  } else if (field.length < usernameMinLength) {
-    return new FormError(FormCauses.Username, "Username should be at least 3 characters long.")
-  }
+  return field === "" ?
+           new FormError(FormCauses.Username, "Username required.") :
+         field.length < usernameMinLength ?
+           new FormError(FormCauses.Username, "Username should be at least 3 characters long.") :
+           undefined;
 }
 
 /**
@@ -76,13 +83,13 @@ export function validateUsername(username: string | undefined): FormError | unde
  * @return a {@link FormError} caused by a {@link FormCauses.Email}
  *         if the validation failed, undefined otherwise.
  */
-export function validateEmail(email: string | undefined): FormError | undefined {
+export function validateEmail(email: string): FormError | undefined {
   const field = email?.trim();
-  if (field === undefined || field === "") {
-    return new FormError(FormCauses.Email, "Email required.")
-  } else if (field.toLowerCase().match(emailRegex) === null) {
-    return new FormError(FormCauses.Email, "Incorrect email format.")
-  }
+  return field === "" ?
+           new FormError(FormCauses.Email, "Email required.") :
+         field.toLowerCase().match(emailRegex) === null ?
+           new FormError(FormCauses.Email, "Incorrect email format.") :
+           undefined;
 }
 
 /**
@@ -97,23 +104,23 @@ export function validateEmail(email: string | undefined): FormError | undefined 
  *         if the validation failed, undefined otherwise.
  */
 export function validatePassword(
-  password: string | undefined,
+  password: string,
   requireConfirmation: boolean = false,
-  confirmation: string | undefined = "",
+  confirmation: string = "",
 ): FormError | undefined {
   const field = password?.trim()
   const fieldConfirmation = confirmation?.trim()
-  if (field === undefined || field === ""){
-    return new FormError(FormCauses.Password, "Password Required.")
-  } else if (field.length < passwordMinLength){
-    return new FormError(FormCauses.Password, "Password should be at least 8 characters long.")
-  } else if (!requireConfirmation) {
-    return;
-  } else if (fieldConfirmation === undefined || fieldConfirmation === ""){
-    return new FormError(FormCauses.Password, "Password confirmation required.")
-  } else if (fieldConfirmation !== field){
-    return new FormError(FormCauses.Password, "Password confirmation does not match the original password.")
-  }
+  return field === "" ?
+           new FormError(FormCauses.Password, "Password required.") :
+         field.length < passwordMinLength ?
+           new FormError(FormCauses.Password, "Password should be at least 8 characters long.") :
+         !requireConfirmation ?
+           undefined :
+         fieldConfirmation === "" ?
+           new FormError(FormCauses.Password, "Password confirmation required.") :
+         fieldConfirmation !== field ?
+           new FormError(FormCauses.Password, "Password confirmation does not match the original password.") :
+           undefined;
 }
 
 /**
@@ -121,12 +128,28 @@ export function validatePassword(
  * application.
  *
  * @param gameId the specified game identifier.
+ * @param required true if the game id is required for the validation,
+ *        false otherwise.
  * @return a {@link FormError} caused by a {@link FormCauses.GameId}
  *         if the validation failed, undefined otherwise.
  */
-export function validateGameId(gameId: string | undefined): FormError | undefined {
+export function validateGameId(gameId: string, required: boolean = true): FormError | undefined {
   const field = gameId?.trim()
-  if (field === undefined || field === ""){
-    return new FormError(FormCauses.GameId, "Game Identifier Required.")
-  }
+  return required && field === "" ?
+           new FormError(FormCauses.GameId, "Game identifier required.") :
+           undefined;
+}
+
+/**
+ * Validate the specified duration against the standard format of the
+ * application.
+ *
+ * @param duration the specified duration.
+ * @return a {@link FormError} caused by a {@link FormCauses.Time}
+ *         if the validation failed, undefined otherwise.
+ */
+export function validateDuration(duration: number): FormError | undefined {
+  return duration <= 0 ?
+           new FormError(FormCauses.Time, "Duration cannot be negative or zero.") :
+           undefined;
 }
