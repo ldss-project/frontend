@@ -11,7 +11,7 @@ const form = ref({
   timeMinutes: 5,
   isPrivate: false,
   gameId: "",
-  error: FormError.none
+  error: FormError.none,
 })
 
 const timeConstraintOptions = [
@@ -51,7 +51,6 @@ function isPrivate(): boolean { return form.value.isPrivate }
         >Time Constraint</label>
         <select
           class="form-select"
-          :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Time) }"
           id="timeConstraint"
           v-model="form.timeConstraint"
         >
@@ -78,6 +77,8 @@ function isPrivate(): boolean { return form.value.isPrivate }
           autocomplete="on"
           v-model="form.timeMinutes"
           min="5"
+          max="60"
+          step="5"
         />
       </div>
     </div>

@@ -14,16 +14,20 @@ import NavBarComponent from "@/view/components/NavBarComponent.vue";
   </div>
 </template>
 
+<style lang="scss">
+  body { overflow-x: hidden }
+</style>
+
 <style lang="scss" scoped>
   .application {
     @extend .flex-row;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
   }
   header {
     @extend .flex-column;
     height: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 9000;
     width: $size-nav-bar;
     border: $border-palette-dark;
@@ -33,7 +37,7 @@ import NavBarComponent from "@/view/components/NavBarComponent.vue";
     @extend .flex-column, .flex-center-content;
     width: 100%;
     position: relative;
-    padding-left: $size-nav-bar;
+    padding: $size-padding $size-padding $size-padding $size-nav-bar;
     background-color: $palette-dark-secondary;
   }
 </style>
