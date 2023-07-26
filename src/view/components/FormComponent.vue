@@ -9,7 +9,6 @@
 <style lang="scss" scoped>
   .form {
     @extend .flex-column, .flex-center-content;
-    margin: $size-margin;
     padding: $size-form-border-radius;
     border: $border-palette-dark;
     border-radius: $size-form-border-radius;

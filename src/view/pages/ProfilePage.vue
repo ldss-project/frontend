@@ -17,7 +17,7 @@ const form = ref({
 
 onMounted(() => {
   /* TODO retrieve and set actual user information */
-  let currentUser: string = router.currentRoute.value.params.userId as string
+  let currentUser: string = router.currentRoute.value.params.username as string
   form.value.username = currentUser
   form.value.email = "user@placeholder.com "
 })
@@ -28,6 +28,7 @@ function onSubmit(event: Event){
   if (validateForm()) {
     console.log("VALIDATED")
     // TODO call update password on authentication service
+    setIsUpdating(false)
   }
 }
 
@@ -35,9 +36,8 @@ function validateForm(): boolean {
   form.value.error = validatePassword(form.value.password, true, form.value.confirmPassword)
   return form.value.error === FormError.none
 }
-function switchIsUpdating(event: Event) {
-  event.preventDefault()
-  form.value.updatingPassword = !form.value.updatingPassword
+function setIsUpdating(newValue: boolean) {
+  form.value.updatingPassword = newValue
   resetForm()
 }
 function resetForm(){
@@ -97,7 +97,7 @@ function resetForm(){
         <button
           type="button"
           class="input-group-text"
-          @click="switchIsUpdating($event)"
+          @click="setIsUpdating(!form.updatingPassword)"
         ><span class="bi bi-pencil-square" /></button>
       </div>
     </div>
