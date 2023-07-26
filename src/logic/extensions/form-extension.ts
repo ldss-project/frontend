@@ -7,6 +7,14 @@ const usernameMinLength: number = 3
  */
 const passwordMinLength: number = 8
 /**
+ * The minimum duration for a game in the application.
+ */
+const minGameDurationMinutes: number = 5
+/**
+ * The maximum duration for a game in the application.
+ */
+const maxGameDurationMinutes: number = 60
+/**
  * The standard email format of the application.
  */
 const emailRegex: RegExp =
@@ -21,6 +29,7 @@ export enum FormCauses {
   Password = "password",
   GameId = "gameId",
   Time = "time",
+  Rank = "rank"
 }
 
 /**
@@ -74,7 +83,7 @@ export function validateUsername(username: string): FormError | undefined {
   return field === "" ?
            new FormError(FormCauses.Username, "Username required.") :
          field.length < usernameMinLength ?
-           new FormError(FormCauses.Username, "Username should be at least 3 characters long.") :
+           new FormError(FormCauses.Username, `Username should be at least ${usernameMinLength} characters long.`) :
            undefined;
 }
 
@@ -116,7 +125,7 @@ export function validatePassword(
   return field === "" ?
            new FormError(FormCauses.Password, "Password required.") :
          field.length < passwordMinLength ?
-           new FormError(FormCauses.Password, "Password should be at least 8 characters long.") :
+           new FormError(FormCauses.Password, `Password should be at least ${passwordMinLength} characters long.`) :
          !requireConfirmation ?
            undefined :
          fieldConfirmation === "" ?
@@ -152,7 +161,23 @@ export function validateGameId(gameId: string, required: boolean = true): FormEr
  *         if the validation failed, undefined otherwise.
  */
 export function validateDuration(duration: number): FormError | undefined {
-  return duration <= 0 ?
-           new FormError(FormCauses.Time, "Duration cannot be negative or zero.") :
-           undefined;
+  return duration <= 0 ? new FormError(FormCauses.Time, "Duration must be greater than zero.") :
+         !Number.isInteger(duration) ? new FormError(FormCauses.Time, "Duration must be an integer.") :
+         duration < minGameDurationMinutes ? new FormError(FormCauses.Time, `Duration must be at least ${minGameDurationMinutes} minutes.`) :
+         duration > maxGameDurationMinutes ? new FormError(FormCauses.Time, `Duration must be at most ${maxGameDurationMinutes} minutes.`) :
+         undefined;
+}
+
+/**
+ * Validate the specified rank against the standard format of the
+ * application.
+ *
+ * @param rank the specified rank.
+ * @return a {@link FormError} caused by a {@link FormCauses.Rank}
+ *         if the validation failed, undefined otherwise.
+ */
+export function validateRank(rank: number): FormError | undefined {
+  return rank <= 0 ? new FormError(FormCauses.Rank, "Rank must be greater than zero.") :
+         !Number.isInteger(rank) ? new FormError(FormCauses.Rank, "Rank must be an integer.") :
+         undefined;
 }
