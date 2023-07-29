@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import ErrorText from "@/view/components/ErrorText.vue";
 import {FormCauses, FormError, validateRank} from "@/logic/extensions/form-extension";
-import {ref, watch} from "vue";
+import {UserScore} from "@/logic/data/score";
 import router from "@/router";
 import {debounce} from "lodash";
+import {ref, watch} from "vue";
 
 const leaderboardWindow = 15
 const shiftWindow = leaderboardWindow
