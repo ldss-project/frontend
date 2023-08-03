@@ -23,6 +23,9 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           fetch-depth: 0
           submodules: recursive
+      # Build project
+      - name: Build project
+        run: npm install
       # Run the project tests
       - name: Test Build
         run: npm run test:unit:ci
