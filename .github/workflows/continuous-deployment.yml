@@ -1,0 +1,35 @@
+name: Publish
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "README.md"
+
+jobs:
+  # Publish the project
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+      GIT_COMMITTER_NAME: Jahrim Gabriele Cesario
+      GIT_COMMITTER_EMAIL: jahrim.cesario2@studio.unibo.it
+      GIT_AUTHOR_NAME: Jahrim Gabriele Cesario
+      GIT_AUTHOR_EMAIL: jahrim.cesario2@studio.unibo.it
+    steps:
+      # Install Node in the provided runner
+      - name: Install Node
+        uses: actions/setup-node@v3
+      # Clone the repository, with full history and submodules
+      - name: Clone Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+          submodules: recursive
+      # Publish artifacts on GitHub
+      - name: Publish on GitHub
+        run: |
+          npm clean-install
+          npx semantic-release
