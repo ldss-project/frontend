@@ -2,7 +2,7 @@
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
-import {FormCauses, FormError, validatePassword} from "@/logic/extensions/form-extension";
+import {FormCause, FormError, validatePassword} from "@/logic/extensions/form-extension";
 import {onMounted, ref} from "vue";
 import router from "@/router";
 
@@ -109,7 +109,7 @@ function resetForm(){
       >New Password</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Password) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Password) }"
         id="password"
         type="password"
         autocomplete="off"
@@ -124,7 +124,7 @@ function resetForm(){
       >Confirm New Password</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Password) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Password) }"
         id="confirmPassword"
         type="password"
         autocomplete="off"

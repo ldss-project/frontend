@@ -5,9 +5,9 @@ import NavBarComponent from "@/view/components/NavBarComponent.vue";
 
 <template>
   <div class="application">
-    <header>
+    <aside>
       <NavBarComponent />
-    </header>
+    </aside>
     <main>
       <RouterView />
     </main>
@@ -24,11 +24,11 @@ import NavBarComponent from "@/view/components/NavBarComponent.vue";
     min-height: 100vh;
     width: 100vw;
   }
-  header {
+  aside {
     @extend .flex-column;
     height: 100%;
     position: fixed;
-    z-index: 9000;
+    z-index: 1000;
     width: $size-nav-bar;
     border: $border-palette-dark;
     background-color: $palette-dark-primary;
@@ -37,7 +37,7 @@ import NavBarComponent from "@/view/components/NavBarComponent.vue";
     @extend .flex-column, .flex-center-content;
     width: 100%;
     position: relative;
-    padding: $size-padding $size-padding $size-padding $size-nav-bar;
+    padding: $size-padding $size-padding $size-padding ($size-nav-bar + $size-padding);
     background-color: $palette-dark-secondary;
   }
 </style>
