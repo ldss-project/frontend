@@ -2,7 +2,7 @@
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {ref} from "vue";
-import {FormCauses, FormError, validateGameId} from "@/logic/extensions/form-extension";
+import {FormCause, FormError, validateGameId} from "@/logic/extensions/form-extension";
 
 const form = ref({
   gameId: "",
@@ -48,7 +48,7 @@ function validateForm(){
       >Private Game Identifier</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.GameId) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.GameId) }"
         id="gameId"
         type="text"
         placeholder="Game Id"

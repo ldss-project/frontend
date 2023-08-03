@@ -1,9 +1,9 @@
-<script setup lang="ts" xmlns="http://www.w3.org/1999/html">
+<script setup lang="ts">
+import {TimeConstraints} from "@/logic/data/time-constraint";
+import {FormCause, FormError, validateGameDuration, validateGameId} from "@/logic/extensions/form-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
-import {FormCauses, FormError, validateDuration, validateGameId} from "@/logic/extensions/form-extension";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
-import {TimeConstraints} from "@/logic/data/time-constraint";
 import {ref} from "vue";
 
 const form = ref({
@@ -32,7 +32,7 @@ function onSubmit(event: Event){
 
 function validateForm(){
   form.value.error =
-    validateDuration(form.value.timeMinutes) ??
+    validateGameDuration(form.value.timeMinutes) ??
     validateGameId(form.value.gameId, form.value.isPrivate)?.withMessage("Game identifier required for a private game.")
   return form.value.error === FormError.none
 }
@@ -70,7 +70,7 @@ function isPrivate(): boolean { return form.value.isPrivate }
         >Time (Minutes)</label>
         <input
           class="form-control"
-          :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Time) }"
+          :class="{ 'is-invalid': form.error?.hasCause(FormCause.GameDuration) }"
           id="time"
           type="number"
           placeholder="Time (Minutes)"
@@ -86,7 +86,7 @@ function isPrivate(): boolean { return form.value.isPrivate }
       <div class="input form-check">
         <input
           class="form-check-input"
-          :class="{ 'is-invalid': form.error?.hasCause(FormCauses.GameId) }"
+          :class="{ 'is-invalid': form.error?.hasCause(FormCause.GameId) }"
           id="private"
           type="checkbox"
           v-model="form.isPrivate"
@@ -105,7 +105,7 @@ function isPrivate(): boolean { return form.value.isPrivate }
         >Game Id</label>
         <input
           class="form-control"
-          :class="{ 'is-invalid': form.error?.hasCause(FormCauses.GameId) }"
+          :class="{ 'is-invalid': form.error?.hasCause(FormCause.GameId) }"
           id="gameId"
           type="text"
           placeholder="Private Game Id"
@@ -131,7 +131,8 @@ function isPrivate(): boolean { return form.value.isPrivate }
     .input {
       align-self: center;
       input[type=checkbox]:checked { background-color: $palette-dark-primary }
-      input[type=checkbox]:checked.is-invalid { background-color: $palette-dark-text-error }
+      input[type=checkbox]:checked.is-invalid { background-color: $palette-dark-error
+      }
     }
   }
 

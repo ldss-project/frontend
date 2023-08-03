@@ -3,7 +3,7 @@ import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import {ref} from "vue";
-import {FormCauses, FormError, validateEmail, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
+import {FormCause, FormError, validateEmail, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
 
 const form = ref({
   username: "",
@@ -41,7 +41,7 @@ function validateForm(): boolean {
       >Username</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Username) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Username) }"
         id="username"
         type="text"
         placeholder="Username"
@@ -57,7 +57,7 @@ function validateForm(): boolean {
       >Email</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Email) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Email) }"
         id="email"
         type="email"
         placeholder="Email"
@@ -73,7 +73,7 @@ function validateForm(): boolean {
       >Password</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Password) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Password) }"
         id="password"
         type="password"
         placeholder="Password"
@@ -89,7 +89,7 @@ function validateForm(): boolean {
       >Confirm Password</label>
       <input
         class="form-control"
-        :class="{ 'is-invalid': form.error?.hasCause(FormCauses.Password) }"
+        :class="{ 'is-invalid': form.error?.hasCause(FormCause.Password) }"
         id="confirmPassword"
         type="password"
         placeholder="Confirm Password"
