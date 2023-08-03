@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {scoreHistoryPlaceholder} from "@/assets/placeholders";
 import {UserScoreHistory} from "@/logic/data/score";
 import {getChartData, timeScale} from "@/logic/extensions/chart-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
@@ -15,6 +16,7 @@ const userScoreHistory = ref<UserScoreHistory>({
 onMounted(() => {
   // TODO call get score history from statistics service
   userScoreHistory.value.latestScores = []
+  userScoreHistory.value.latestScores = scoreHistoryPlaceholder().latestScores
 })
 </script>
 
