@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import ErrorText from "@/view/components/ErrorText.vue";
-import {FormCauses, FormError, validateRank} from "@/logic/extensions/form-extension";
+import {FormCause, FormError, validateRank} from "@/logic/extensions/form-extension";
 import {UserScore} from "@/logic/data/score";
 import router from "@/router";
 import {debounce} from "lodash";
 import {ref, watch} from "vue";
+import {Arrays} from "@/logic/extensions/array-extension";
 
 const leaderboardWindow = 15
 const shiftWindow = leaderboardWindow
@@ -21,12 +22,12 @@ function updateLeaderboard(firstRank: number) {
   console.log(firstRank)
   if (validateForm()) {
     // TODO retrieve ranks starting from the first rank
-    scores.value = Array.from(Array.from(Array(leaderboardWindow).keys()).map(e => e + firstRank), value => ({
-      rank: value,
-      username: `Player${value}`,
+    scores.value = Arrays.Int.sequence(firstRank, leaderboardWindow).map(rank => ({
+      rank: rank,
+      username: `Player${rank}`,
       wins: 1,
-      losses: value,
-      ratio: 1 / value,
+      losses: rank,
+      ratio: 1 / rank,
     }))
   }
 }
@@ -44,7 +45,7 @@ function validateForm(): boolean {
     <div class="search-bar form-floating">
       <input
         class="form-control"
-        :class="{ 'is-invalid': error?.hasCause(FormCauses.Rank) }"
+        :class="{ 'is-invalid': error?.hasCause(FormCause.Rank) }"
         id="rank"
         type="number"
         min="1"
@@ -96,7 +97,6 @@ function validateForm(): boolean {
 
   table {
     text-align: center;
-    border: $border-palette-dark;
 
     tr {
       height: $size-button;
@@ -106,15 +106,12 @@ function validateForm(): boolean {
         color: $palette-dark-text-primary;
       }
       &:not(:nth-child(1)){
+        @extend .clickable;
         background-color: $palette-dark-tertiary;
         color: $palette-dark-text-tertiary;
-        &:hover {
-          cursor: pointer;
-          background-color: $palette-dark-tertiary-hover;
-        }
       }
       &:nth-child(even){
-        background-color: $palette-dark-tertiary-active;
+        background-color: $palette-dark-tertiary-lighter;
       }
     }
   }

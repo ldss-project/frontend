@@ -12,6 +12,6 @@ defineProps<{
   .error-text {
     width: 100%;
     margin-bottom: $size-margin * 2;
-    color: $palette-dark-text-error;
+    color: $palette-dark-error;
   }
 </style>
