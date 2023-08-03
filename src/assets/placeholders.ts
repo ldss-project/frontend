@@ -9,11 +9,14 @@ import {Moves} from "@/logic/data/game/move";
 import {Durations, TimeUnit} from "@/logic/data/game/duration";
 import {type UserScore, type UserScoreHistory} from "@/logic/data/score";
 import {Arrays} from "@/logic/extensions/array-extension";
+import {ChessGameServerErrorType} from "@/logic/data/game/server-error";
+import {ChessGameSituationType} from "@/logic/data/game/situation";
+import {GameOverCause} from "@/logic/data/game/result";
 
 export function chessGamePlaceholder(): ChessGame {
   return {
     server: {
-      state: ChessGameServerState.Terminated,
+      state: ChessGameServerState.WaitingForPlayers,
       // error: {
       //  type: ChessGameServerErrorType.Generic,
       //  description: "Oops...",
@@ -22,15 +25,15 @@ export function chessGamePlaceholder(): ChessGame {
     state: {
       turn: Team.White,
       // situation: {
-      //   type: ChessGameSituationType.Promotion,
-      //   promotingPawnPosition: Positions.of(File.H, Rank._8)
-      // },
+      //  type: ChessGameSituationType.Promotion,
+      //  promotingPawnPosition: Positions.of(File.H, Rank._8)
+      //},
       // gameOver: {
       //  cause: GameOverCause.Stalemate,
       //  winner: Team.Black,
       // },
       white: {
-        player: {username: "PlayerWhite",},
+        player: { username: "PlayerWhite", },
         chessboard: {
           pieces: [
             Pieces.rook(Positions.of(File.A, Rank._1)),
@@ -41,7 +44,7 @@ export function chessGamePlaceholder(): ChessGame {
             Pieces.bishop(Positions.of(File.F, Rank._1)),
             Pieces.knight(Positions.of(File.G, Rank._1)),
             Pieces.rook(Positions.of(File.H, Rank._1)),
-            Pieces.pawn(Positions.of(File.A, Rank._2)),
+            Pieces.pawn(Positions.of(File.A, Rank._6)),
             Pieces.pawn(Positions.of(File.B, Rank._2)),
             Pieces.pawn(Positions.of(File.C, Rank._2)),
             Pieces.pawn(Positions.of(File.D, Rank._2)),
@@ -52,14 +55,20 @@ export function chessGamePlaceholder(): ChessGame {
           ],
           moves: [
             Moves.move(Positions.of(File.B, Rank._2), Positions.of(File.B, Rank._3)),
-            Moves.capture(Positions.of(File.B, Rank._2), Positions.of(File.B, Rank._4)),
+            Moves.move(Positions.of(File.B, Rank._2), Positions.of(File.B, Rank._4)),
+            Moves.capture(Positions.of(File.B, Rank._2), Positions.of(File.C, Rank._3)),
           ],
         },
-        history: [],
+        history: [
+          Moves.move(Positions.of(File.A, Rank._2), Positions.of(File.A, Rank._3)),
+          Moves.move(Positions.of(File.A, Rank._3), Positions.of(File.A, Rank._4)),
+          Moves.move(Positions.of(File.A, Rank._4), Positions.of(File.A, Rank._5)),
+          Moves.move(Positions.of(File.A, Rank._5), Positions.of(File.A, Rank._6)),
+        ],
         time: Durations.of(10, TimeUnit.MINUTES),
       },
       black: {
-        player: {username: "PlayerBlack",},
+        player: { username: "PlayerBlack", },
         chessboard: {
           pieces: [
             Pieces.rook(Positions.of(File.A, Rank._8)),
@@ -71,17 +80,24 @@ export function chessGamePlaceholder(): ChessGame {
             Pieces.knight(Positions.of(File.G, Rank._8)),
             Pieces.rook(Positions.of(File.H, Rank._8)),
             Pieces.pawn(Positions.of(File.A, Rank._7)),
-            Pieces.pawn(Positions.of(File.B, Rank._4)),
-            Pieces.pawn(Positions.of(File.C, Rank._7)),
+            Pieces.pawn(Positions.of(File.B, Rank._7)),
+            Pieces.pawn(Positions.of(File.C, Rank._3)),
             Pieces.pawn(Positions.of(File.D, Rank._7)),
             Pieces.pawn(Positions.of(File.E, Rank._7)),
             Pieces.pawn(Positions.of(File.F, Rank._7)),
             Pieces.pawn(Positions.of(File.G, Rank._7)),
             Pieces.pawn(Positions.of(File.H, Rank._5)),
           ],
-          moves: [],
+          moves: [
+            Moves.move(Positions.of(File.B, Rank._7), Positions.of(File.B, Rank._6)),
+            Moves.move(Positions.of(File.B, Rank._7), Positions.of(File.B, Rank._5)),
+            Moves.capture(Positions.of(File.B, Rank._7), Positions.of(File.A, Rank._6)),
+          ],
         },
         history: [
+          Moves.move(Positions.of(File.C, Rank._7), Positions.of(File.C, Rank._5)),
+          Moves.move(Positions.of(File.C, Rank._5), Positions.of(File.C, Rank._4)),
+          Moves.move(Positions.of(File.C, Rank._4), Positions.of(File.C, Rank._3)),
           Moves.move(Positions.of(File.H, Rank._7), Positions.of(File.H, Rank._5)),
         ],
         time: Durations.of(10, TimeUnit.MINUTES),
