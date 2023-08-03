@@ -36,13 +36,13 @@ export enum FormCauses {
  * Model an error in a form.
  */
 export class FormError {
+  /** An undefined {@link FormError}. */
+  static none: FormError | undefined = undefined
+
   /** The cause of the error. */
   readonly cause: string
   /** A description of the error. */
   readonly message: string
-
-  /** An undefined {@link FormError}. */
-  static none: FormError | undefined = undefined
 
   /**
    * Create a new {@link FormError} with the specified cause and description.
