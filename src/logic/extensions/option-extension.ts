@@ -8,7 +8,7 @@ export class Option<V> {
    */
   public static of<V>(value: V | undefined): Option<V> { return new Option<V>(value) }
   /** @return a new empty {@link Option}. */
-  public static empty<V>(): Option<V> { return Option.of<V>(undefined) }
+  public static none<V>(): Option<V> { return Option.of<V>(undefined) }
 
   private readonly value: V | undefined
 
