@@ -1,0 +1,44 @@
+name: Test
+on:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  # Test the project
+  test:
+    strategy:
+      matrix:
+        os: [windows, macos, ubuntu]
+    runs-on: ${{matrix.os}}-latest
+    steps:
+      # Install the specified version of Node.js in the provided runner
+      - name: Install Node
+        uses: actions/setup-node@v3
+      # Clone the repository, with full history and submodules
+      - name: Clone Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+          submodules: recursive
+      # Run the project tests
+      - name: Test Build
+        run: npm run test:unit:ci
+
+  # Completes successfully if all previous job were completed successfully
+  success:
+    runs-on: ubuntu-22.04
+    needs:
+      - test
+    # Executes always (even if previous jobs have failed, but not if any of them has been cancelled)
+    if: >-
+      always() && (
+        contains(join(needs.*.result, ','), 'failure')
+        || !contains(join(needs.*.result, ','), 'cancelled')
+      )
+    # Succeeds only if all previous jobs have succeeded
+    steps:
+      - name: Verify that there were no failures
+        run: ${{ !contains(join(needs.*.result, ','), 'failure') }}
