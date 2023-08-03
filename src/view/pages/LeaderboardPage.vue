@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import {leaderboardPlaceholder} from "@/assets/placeholders";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {FormCause, FormError, validateRank} from "@/logic/extensions/form-extension";
-import {UserScore} from "@/logic/data/score";
+import {type UserScore} from "@/logic/data/score";
 import router from "@/router";
 import {debounce} from "lodash";
 import {ref, watch} from "vue";
-import {Arrays} from "@/logic/extensions/array-extension";
 
 const leaderboardWindow = 15
 const shiftWindow = leaderboardWindow
@@ -22,13 +22,7 @@ function updateLeaderboard(firstRank: number) {
   console.log(firstRank)
   if (validateForm()) {
     // TODO retrieve ranks starting from the first rank
-    scores.value = Arrays.Int.sequence(firstRank, leaderboardWindow).map(rank => ({
-      rank: rank,
-      username: `Player${rank}`,
-      wins: 1,
-      losses: rank,
-      ratio: 1 / rank,
-    }))
+    scores.value = leaderboardPlaceholder(firstRank, leaderboardWindow)
   }
 }
 function visitStatistics(username: string) {
