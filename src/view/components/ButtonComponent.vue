@@ -1,6 +1,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
-  type?: string
+  type?: "submit" | "reset" | "button"
 }>(), {
   type: "button"
 })
@@ -14,13 +14,12 @@ withDefaults(defineProps<{
 
 <style lang="scss" scoped>
   .button {
-    @extend .flex-row, .flex-center-content;
+    @extend .flex-row, .flex-center-content, .clickable;
     height: $size-button;
     width: 100%;
     border: $border-palette-dark;
     border-radius: $size-button-border-radius;
     font-weight: bold;
-    &:hover { cursor: pointer; }
   }
 </style>
 
@@ -28,14 +27,15 @@ withDefaults(defineProps<{
   .button-primary {
     background-color: $palette-dark-primary;
     color: $palette-dark-text-primary;
-    &:hover { background-color: $palette-dark-primary-hover; }
-    &:active { background-color: $palette-dark-primary-active; }
   }
 
   .button-tertiary {
     background-color: $palette-dark-tertiary;
     color: $palette-dark-text-tertiary;
-    &:hover { background-color: $palette-dark-tertiary-hover; }
-    &:active { background-color: $palette-dark-tertiary-active; }
+  }
+
+  .button-error {
+    background-color: $palette-dark-error;
+    color: $palette-dark-text-primary;
   }
 </style>

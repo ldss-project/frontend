@@ -3,17 +3,13 @@
   $palette-dark-primary: #333333;
   $palette-dark-secondary: #4D4D4D;
   $palette-dark-tertiary: #E6E6E6;
+  $palette-dark-tertiary-lighter: #F7F7F7;
   $palette-dark-border: #000000;
   $palette-dark-text-primary: #FFFFFF;
   $palette-dark-text-secondary: #FFFFFF;
   $palette-dark-text-tertiary: #000000;
-  $palette-dark-text-error: #FF0000;
+  $palette-dark-error: #DD0000;
   $palette-dark-graph: #007FFF;
-
-  $palette-dark-primary-hover: #222222;
-  $palette-dark-primary-active: $palette-dark-secondary;
-  $palette-dark-tertiary-hover: #D5D5D5;
-  $palette-dark-tertiary-active: #F7F7F7;
 
   // Chess Board Palette
   $palette-chessboard-primary: #F9D19D;
@@ -23,6 +19,8 @@
   $palette-chessboard-last-move: #FFFF99;
 
 // Sizes
+$size-chessboard: 32vw;
+$size-chessboard-cell: calc($size-chessboard / 8);
 $size-nav-bar: 10rem;
 $size-button: 3rem;
 $size-icon: 2rem;
@@ -34,3 +32,4 @@ $size-padding: 0.5rem;
 
 // Borders
 $border-palette-dark: $size-border solid $palette-dark-border;
+$border-heavy-palette-dark: $size-border * 2 solid $palette-dark-border;
