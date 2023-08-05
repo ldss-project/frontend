@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080",
+    "dev:docker": "vite --host 0.0.0.0 --port 8080",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -24,7 +25,9 @@
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
+    "@codedependant/semantic-release-docker": "^4.4.0",
     "@rushstack/eslint-patch": "^1.2.0",
+    "@semantic-release/changelog": "^6.0.3",
     "@tsconfig/node18": "^2.0.1",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^18.16.17",
@@ -42,7 +45,6 @@
     "sass": "^1.63.6",
     "sass-loader": "^13.3.2",
     "semantic-release": "^21.0.7",
-    "@semantic-release/changelog": "^6.0.3",
     "typescript": "~5.0.4",
     "vite": "^4.3.9",
     "vitest": "^0.32.0",
