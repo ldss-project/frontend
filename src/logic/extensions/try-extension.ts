@@ -86,7 +86,7 @@ export class Try<TS, TF> {
 }
 
 /**
- * A computation concluded successfully with a returned value.
+ * A successful computation.
  */
 export class Success<TS> extends Try<TS, any> {
   public constructor(value?: TS) { super("success", value); }
@@ -96,7 +96,7 @@ export class Success<TS> extends Try<TS, any> {
 }
 
 /**
- * A computation failed due to an error.
+ * A failed computation.
  */
 export class Failure<TF> extends Try<any, TF> {
   public constructor(value?: TF) { super("failure", value); }
