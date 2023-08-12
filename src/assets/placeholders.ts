@@ -10,7 +10,8 @@ import {Durations, TimeUnit} from "@/logic/proxies/game/data/duration";
 import {ChessGameServerErrorType} from "@/logic/proxies/game/data/server-error";
 import {ChessGameSituationType} from "@/logic/proxies/game/data/situation";
 import {GameOverCause} from "@/logic/proxies/game/data/result";
-import {type UserScore, type UserScoreHistory} from "@/logic/proxies/statistics/data/score";
+import {type UserScore} from "@/logic/proxies/statistics/data/user-score";
+import {type UserScoreHistory} from "@/logic/proxies/statistics/data/user-score-history";
 import {Arrays} from "@/logic/extensions/array-extension";
 
 export function chessGamePlaceholder(): ChessGame {
@@ -111,140 +112,140 @@ export function scoreHistoryPlaceholder(): UserScoreHistory {
     username: "PlayerPlaceholder",
     latestScores: [
       {
-        insertion: new Date("2023-04-04T22:00:00.000Z"),
+        insertion: { $date: "2023-04-04T22:00:00.000Z" },
         rank: 1,
         wins: 1,
         losses: 0,
         ratio: 1
       },
       {
-        insertion: new Date("2023-04-10T22:00:00.000Z"),
+        insertion: { $date: "2023-04-10T22:00:00.000Z" },
         rank: 1,
         wins: 2,
         losses: 0,
         ratio: 2
       },
       {
-        insertion: new Date("2023-04-20T22:00:00.000Z"),
+        insertion: { $date: "2023-04-20T22:00:00.000Z" },
         rank: 1,
         wins: 2,
         losses: 1,
         ratio: 2
       },
       {
-        insertion: new Date("2023-04-24T22:00:00.000Z"),
+        insertion: { $date: "2023-04-24T22:00:00.000Z" },
         rank: 1,
         wins: 3,
         losses: 1,
         ratio: 3
       },
       {
-        insertion: new Date("2023-05-01T22:00:00.000Z"),
+        insertion: { $date: "2023-05-01T22:00:00.000Z" },
         rank: 1,
         wins: 3,
         losses: 2,
         ratio: 1.5
       },
       {
-        insertion: new Date("2023-05-03T22:00:00.000Z"),
+        insertion: { $date: "2023-05-03T22:00:00.000Z" },
         rank: 1,
         wins: 4,
         losses: 2,
         ratio: 2
       },
       {
-        insertion: new Date("2023-05-05T22:00:00.000Z"),
+        insertion: { $date: "2023-05-05T22:00:00.000Z" },
         rank: 1,
         wins: 5,
         losses: 2,
         ratio: 2.5
       },
       {
-        insertion: new Date("2023-05-10T22:00:00.000Z"),
+        insertion: { $date: "2023-05-10T22:00:00.000Z" },
         rank: 1,
         wins: 6,
         losses: 2,
         ratio: 3
       },
       {
-        insertion: new Date("2023-05-12T22:00:00.000Z"),
+        insertion: { $date: "2023-05-12T22:00:00.000Z" },
         rank: 1,
         wins: 6,
         losses: 3,
         ratio: 2
       },
       {
-        insertion: new Date("2023-05-15T22:00:00.000Z"),
+        insertion: { $date: "2023-05-15T22:00:00.000Z" },
         rank: 1,
         wins: 6,
         losses: 4,
         ratio: 1.5
       },
       {
-        insertion: new Date("2023-05-18T22:00:00.000Z"),
+        insertion: { $date: "2023-05-18T22:00:00.000Z" },
         rank: 1,
         wins: 6,
         losses: 5,
         ratio: 1.2
       },
       {
-        insertion: new Date("2023-05-21T22:00:00.000Z"),
+        insertion: { $date: "2023-05-21T22:00:00.000Z" },
         rank: 1,
         wins: 7,
         losses: 5,
         ratio: 1.4
       },
       {
-        insertion: new Date("2023-05-22T22:00:00.000Z"),
+        insertion: { $date: "2023-05-22T22:00:00.000Z" },
         rank: 1,
         wins: 8,
         losses: 5,
         ratio: 1.6
       },
       {
-        insertion: new Date("2023-05-27T22:00:00.000Z"),
+        insertion: { $date: "2023-05-27T22:00:00.000Z" },
         rank: 1,
         wins: 9,
         losses: 5,
         ratio: 1.8
       },
       {
-        insertion: new Date("2023-06-01T22:00:00.000Z"),
+        insertion: { $date: "2023-06-01T22:00:00.000Z" },
         rank: 1,
         wins: 10,
         losses: 5,
         ratio: 2
       },
       {
-        insertion: new Date("2023-06-04T22:00:00.000Z"),
+        insertion: { $date: "2023-06-04T22:00:00.000Z" },
         rank: 1,
         wins: 11,
         losses: 5,
         ratio: 2.2
       },
       {
-        insertion: new Date("2023-06-07T22:00:00.000Z"),
+        insertion: { $date: "2023-06-07T22:00:00.000Z" },
         rank: 1,
         wins: 12,
         losses: 5,
         ratio: 2.4
       },
       {
-        insertion: new Date("2023-06-10T22:00:00.000Z"),
+        insertion: { $date: "2023-06-10T22:00:00.000Z" },
         rank: 1,
         wins: 13,
         losses: 5,
         ratio: 2.6
       },
       {
-        insertion: new Date("2023-06-15T22:00:00.000Z"),
+        insertion: { $date: "2023-06-15T22:00:00.000Z" },
         rank: 1,
         wins: 13,
         losses: 6,
         ratio: 2.16
       },
       {
-        insertion: new Date(Date.now()),
+        insertion: { $date: new Date(Date.now()).toUTCString() },
         rank: 1,
         wins: 13,
         losses: 6,
