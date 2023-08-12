@@ -17,11 +17,15 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.196",
+    "@vueuse/core": "^10.3.0",
+    "@vueuse/integrations": "^10.3.0",
+    "axios": "^1.4.0",
     "chart.js": "^4.3.2",
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
     "primevue": "^3.31.0",
+    "universal-cookie": "^4.0.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"
   },
