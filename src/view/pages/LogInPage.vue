@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import {AuthenticationErrorType} from "@/logic/data/authentication/authentication-error";
 import {FormCause, FormError, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
-import {ref} from "vue";
 import {InjectionKeys} from "@/injection-keys";
+import {onMounted, ref} from "vue";
+import router from "@/router";
 
 const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
 
@@ -16,12 +18,33 @@ const form = ref({
   error: FormError.none,
 })
 
+onMounted(() =>
+  authenticationService.value
+    .sessionManager()
+    .session()
+    .ifPresent(() => router.push({ name: 'homepage' }))
+)
+
 function onSubmit(event: Event){
   event.preventDefault()
-  console.log(form.value)
   if (validateForm()) {
-    console.log("VALIDATED")
-    // TODO call login on authentication service
+    authenticationService.value
+      .loginUser(form.value.username, form.value.password)
+      .then(_ => _
+        .ifSuccess(() => router.push({ name: "homepage" }))
+        .ifFailure(error => {
+          switch (error.type) {
+            case AuthenticationErrorType.IncorrectPasswordException:
+              form.value.error = new FormError(FormCause.Password, "Incorrect password.")
+              break;
+            case AuthenticationErrorType.UserNotFoundException:
+              form.value.error = new FormError(FormCause.Username, "User not found.")
+              break;
+            default:
+              console.error(error)
+          }
+        })
+      )
   }
 }
 
