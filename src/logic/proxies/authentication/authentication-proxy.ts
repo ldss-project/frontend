@@ -129,7 +129,6 @@ export class AuthenticationProxy {
       error => Try.failure(error.response.data as AuthenticationError),
     )
   }
-
 }
 
 /** A manager of sessions for the authentication service. */
