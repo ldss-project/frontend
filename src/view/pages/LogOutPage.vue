@@ -4,10 +4,17 @@ import {InjectionKeys} from "@/injection-keys";
 import {onMounted} from "vue";
 import router from "@/router";
 
-onMounted(() => {
-  // TODO call log out on authentication service
-  router.push({ name: 'homepage'})
-})
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
+
+onMounted(() =>
+  authenticationService.value.sessionManager().session()
+    .ifPresent(() =>
+      authenticationService.value.logoutUser().finally(() => router.push({ name: 'homepage' }))
+    )
+    .ifEmpty(() =>
+      router.push({ name: 'homepage' })
+    )
+)
 </script>
 
 <template></template>
