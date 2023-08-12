@@ -1,7 +1,7 @@
-import {type Chessboard} from "@/logic/data/game/chessboard";
-import {type Move} from "@/logic/data/game/move";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
-import {EnrichedChessGamePerspective} from "@/logic/data/game/enriched/perspective";
+import {type Chessboard} from "@/logic/proxies/game/data/chessboard";
+import {type Move} from "@/logic/proxies/game/data/move";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
+import {EnrichedChessGamePerspective} from "@/logic/proxies/game/data/enriched/perspective";
 
 /** A decorated {@link Chessboard}. */
 export class EnrichedChessboard implements Chessboard {

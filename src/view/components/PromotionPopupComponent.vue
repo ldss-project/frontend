@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {Pieces} from "@/logic/data/game/piece";
+import {Pieces} from "@/logic/proxies/game/data/piece";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 import {Option} from "@/logic/extensions/option-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
 import PopupComponent from "@/view/components/PopupComponent.vue";
 import ChessboardCellComponent from "@/view/components/ChessboardCellComponent.vue";
 import {InjectionKeys} from "@/injection-keys";

@@ -1,7 +1,7 @@
-import {type Piece, PieceType} from "@/logic/data/game/piece";
-import {Team} from "@/logic/data/game/team";
-import {type Position} from "@/logic/data/game/position";
-import {EnrichedChessboard} from "@/logic/data/game/enriched/chessboard";
+import {type Piece, PieceType} from "@/logic/proxies/game/data/piece";
+import {Team} from "@/logic/proxies/game/data/team";
+import {type Position} from "@/logic/proxies/game/data/position";
+import {EnrichedChessboard} from "@/logic/proxies/game/data/enriched/chessboard";
 
 /** A decorated {@link Piece}. */
 export class EnrichedPiece implements Piece {

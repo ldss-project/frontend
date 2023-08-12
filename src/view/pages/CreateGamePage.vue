@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {TimeConstraint} from "@/logic/data/game/time-constraint";
+import {TimeConstraint} from "@/logic/proxies/game/data/time-constraint";
 import {FormCause, FormError, validateGameDuration, validateGameId} from "@/logic/extensions/form-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";

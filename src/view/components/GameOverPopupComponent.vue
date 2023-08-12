@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {GameOverCause} from "@/logic/data/game/result";
+import {GameOverCause} from "@/logic/proxies/game/data/result";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 import PopupComponent from "@/view/components/PopupComponent.vue";

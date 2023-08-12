@@ -1,4 +1,3 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import Homepage from "@/view/pages/HomePage.vue";
 import NotFoundPage from "@/view/pages/NotFoundPage.vue";
 import LogInPage from "@/view/pages/LogInPage.vue";
@@ -10,6 +9,7 @@ import GamePage from "@/view/pages/GamePage.vue";
 import ProfilePage from "@/view/pages/ProfilePage.vue";
 import StatisticsPage from "@/view/pages/StatisticsPage.vue";
 import LeaderboardPage from "@/view/pages/LeaderboardPage.vue";
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

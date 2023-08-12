@@ -1,4 +1,4 @@
-import {Team} from "@/logic/data/game/team";
+import {Team} from "@/logic/proxies/game/data/team";
 
 /** The result of a {@link ChessGame}. */
 export interface ChessGameResult {

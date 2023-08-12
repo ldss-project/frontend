@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {PieceImages} from "@/assets/piece-image";
-import {type Position} from "@/logic/data/game/position";
-import {Ranks} from "@/logic/data/game/rank";
-import {type Move} from "@/logic/data/game/move";
-import {Files} from "@/logic/data/game/file";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
+import {type Position} from "@/logic/proxies/game/data/position";
+import {Ranks} from "@/logic/proxies/game/data/rank";
+import {type Move} from "@/logic/proxies/game/data/move";
+import {Files} from "@/logic/proxies/game/data/file";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import {haveSameParity} from "@/logic/extensions/number-extension";
 import {InjectionKeys} from "@/injection-keys";

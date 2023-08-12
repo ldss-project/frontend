@@ -1,13 +1,13 @@
-import {type ChessGamePerspective} from "@/logic/data/game/perspective";
-import {type Player} from "@/logic/data/game/player";
-import {type Move} from "@/logic/data/game/move";
-import {type Duration} from "@/logic/data/game/duration";
-import {Team} from "@/logic/data/game/team";
+import {type ChessGamePerspective} from "@/logic/proxies/game/data/perspective";
+import {type Player} from "@/logic/proxies/game/data/player";
+import {type Move} from "@/logic/proxies/game/data/move";
+import {type Duration} from "@/logic/proxies/game/data/duration";
+import {Team} from "@/logic/proxies/game/data/team";
+import {type Position, Positions} from "@/logic/proxies/game/data/position";
+import {EnrichedChessboard} from "@/logic/proxies/game/data/enriched/chessboard";
+import {EnrichedChessGameState} from "@/logic/proxies/game/data/enriched/state";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 import {Lazy} from "@/logic/extensions/lazy-extension";
-import {type Position, Positions} from "@/logic/data/game/position";
-import {EnrichedChessboard} from "@/logic/data/game/enriched/chessboard";
-import {EnrichedChessGameState} from "@/logic/data/game/enriched/state";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
 
 /** A decorated {@link ChessGamePerspective}. */
 export class EnrichedChessGamePerspective implements ChessGamePerspective {

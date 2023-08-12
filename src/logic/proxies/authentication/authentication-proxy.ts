@@ -1,10 +1,10 @@
-import {type User} from "@/logic/data/authentication/user";
-import axios, {type AxiosInstance} from "axios";
-import {type UserSession} from "@/logic/data/authentication/user-session";
+import {type User} from "@/logic/proxies/authentication/data/user";
+import {type UserSession} from "@/logic/proxies/authentication/data/user-session";
+import {type AuthenticationError} from "@/logic/proxies/authentication/data/authentication-error";
 import {Option} from "@/logic/extensions/option-extension";
 import {Try} from "@/logic/extensions/try-extension";
-import {type AuthenticationError} from "@/logic/data/authentication/authentication-error";
 import {useCookies} from "@vueuse/integrations/useCookies";
+import axios, {type AxiosInstance} from "axios";
 
 /**
  * A proxy for communicating with the authentication service.

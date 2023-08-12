@@ -1,17 +1,17 @@
-import {type ChessGame} from "@/logic/data/game/game";
-import {ChessGameServerState} from "@/logic/data/game/server";
-import {Team} from "@/logic/data/game/team";
-import {Pieces} from "@/logic/data/game/piece";
-import {Positions} from "@/logic/data/game/position";
-import {File} from "@/logic/data/game/file";
-import {Rank} from "@/logic/data/game/rank";
-import {Moves} from "@/logic/data/game/move";
-import {Durations, TimeUnit} from "@/logic/data/game/duration";
-import {type UserScore, type UserScoreHistory} from "@/logic/data/statistics/score";
+import {type ChessGame} from "@/logic/proxies/game/data/game";
+import {ChessGameServerState} from "@/logic/proxies/game/data/server";
+import {Team} from "@/logic/proxies/game/data/team";
+import {Pieces} from "@/logic/proxies/game/data/piece";
+import {Positions} from "@/logic/proxies/game/data/position";
+import {File} from "@/logic/proxies/game/data/file";
+import {Rank} from "@/logic/proxies/game/data/rank";
+import {Moves} from "@/logic/proxies/game/data/move";
+import {Durations, TimeUnit} from "@/logic/proxies/game/data/duration";
+import {ChessGameServerErrorType} from "@/logic/proxies/game/data/server-error";
+import {ChessGameSituationType} from "@/logic/proxies/game/data/situation";
+import {GameOverCause} from "@/logic/proxies/game/data/result";
+import {type UserScore, type UserScoreHistory} from "@/logic/proxies/statistics/data/score";
 import {Arrays} from "@/logic/extensions/array-extension";
-import {ChessGameServerErrorType} from "@/logic/data/game/server-error";
-import {ChessGameSituationType} from "@/logic/data/game/situation";
-import {GameOverCause} from "@/logic/data/game/result";
 
 export function chessGamePlaceholder(): ChessGame {
   return {

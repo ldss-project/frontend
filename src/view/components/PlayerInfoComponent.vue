@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {injectStrict} from "@/logic/extensions/vue-extension";
-import {Durations} from "@/logic/data/game/duration";
+import {Durations} from "@/logic/proxies/game/data/duration";
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 

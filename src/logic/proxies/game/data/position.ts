@@ -1,5 +1,5 @@
-import {Rank} from "@/logic/data/game/rank";
-import {File} from "@/logic/data/game/file";
+import {Rank} from "@/logic/proxies/game/data/rank";
+import {File} from "@/logic/proxies/game/data/file";
 
 /** A position in a {@link Chessboard} of a {@link ChessGame}. */
 export interface Position {

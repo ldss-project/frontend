@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {leaderboardPlaceholder} from "@/assets/placeholders";
-import ErrorText from "@/view/components/ErrorText.vue";
+import {type UserScore} from "@/logic/proxies/statistics/data/score";
 import {FormCause, FormError, validateRank} from "@/logic/extensions/form-extension";
-import {UserScore} from "@/logic/data/statistics/score";
+import ErrorText from "@/view/components/ErrorText.vue";
 import {debounce} from "lodash";
 import {ref, watch} from "vue";
 import router from "@/router";

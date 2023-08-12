@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {RouteLocationRaw} from "vue-router";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
+import {RouteLocationRaw} from "vue-router";
 
 defineProps<{
   to: RouteLocationRaw

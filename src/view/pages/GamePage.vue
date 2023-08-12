@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {chessGamePlaceholder} from "@/assets/placeholders";
-import {type Position} from "@/logic/data/game/position";
-import {ChessGameSituationType} from "@/logic/data/game/situation";
-import {ChessGameServerState} from "@/logic/data/game/server";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
+import {type Position} from "@/logic/proxies/game/data/position";
+import {ChessGameSituationType} from "@/logic/proxies/game/data/situation";
+import {ChessGameServerState} from "@/logic/proxies/game/data/server";
+import {EnrichedChessGame} from "@/logic/proxies/game/data/enriched/game";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 import {Option} from "@/logic/extensions/option-extension";
 import PlayerInfoComponent from "@/view/components/PlayerInfoComponent.vue";
 import ChessboardComponent from "@/view/components/ChessboardComponent.vue";
