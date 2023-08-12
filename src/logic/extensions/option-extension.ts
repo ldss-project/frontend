@@ -10,28 +10,28 @@ export class Option<V> {
   /** @return a new empty {@link Option}. */
   public static none<V>(): Option<V> { return Option.of<V>(undefined) }
 
-  private readonly value: V | undefined
+  private readonly _value: V | undefined
 
-  private constructor(value: V | undefined) { this.value = value }
+  private constructor(value: V | undefined) { this._value = value }
 
   /**
    * @return the content of this {@link Option} if present;
    *         undefined otherwise.
    */
-  public get(): V | undefined { return this.value }
+  public get(): V | undefined { return this._value }
   /**
    * @param defaultValue the specified default value.
    * @return the content of this {@link Option} if present;
    *         the specified default value otherwise.
    */
-  public getOrElse(defaultValue: V): V { return this.value ?? defaultValue }
+  public getOrElse(defaultValue: V): V { return this._value ?? defaultValue }
   /**
    * @return the content of this {@link Option} if present;
    *         throws an {@link Error} otherwise.
    */
   public getOrThrow(): V {
-    if (!this.value) { throw new Error("NoSuchElementException: this option is empty.") }
-    return this.value
+    if (!this._value) { throw new Error("NoSuchElementException: this option is empty.") }
+    return this._value
   }
 
   /**
@@ -43,7 +43,7 @@ export class Option<V> {
    * @return true if the content of this {@link Option} is present;
    *         false otherwise.
    */
-  public present(): boolean { return this.value !== undefined }
+  public present(): boolean { return this._value !== undefined }
 
   /**
    * Transforms the content of this {@link Option} using the specified
@@ -55,7 +55,7 @@ export class Option<V> {
    *         the content of this {@link Option}.
    */
   public map<T>(mapper: (source: V) => T | undefined): Option<T> {
-    return new Option<T>(this.value ? mapper(this.value) : undefined)
+    return new Option<T>(this._value ? mapper(this._value) : undefined)
   }
 
   /**
@@ -91,8 +91,19 @@ export class Option<V> {
    * @param callback the specified callback.
    * @return this.
    */
-  public tapEach(callback: (source: V) => void): this {
+  public ifPresent(callback: (source: V) => void): this {
     this.map(callback)
+    return this
+  }
+
+  /**
+   * Executes the specified callback if this {@link Option} is empty.
+   *
+   * @param callback the specified callback.
+   * @return this.
+   */
+  public ifEmpty(callback: () => void): this {
+    if (this.empty()) { callback() }
     return this
   }
 }

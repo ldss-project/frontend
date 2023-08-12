@@ -8,17 +8,17 @@ const some = Option.of(definedValue)
 describe("In the Option extension", () => {
   describe("none", () => {
     it("should let the user create an empty Option", async () => {
-      const emptyOption: Option = Option.none()
+      const emptyOption: Option<any> = Option.none()
       expect(emptyOption.get()).toEqual(undefined)
     })
   })
   describe("of", () => {
     it("should let the user create an Option with a value", async () => {
-      const fullOption: Option = Option.of(definedValue)
+      const fullOption: Option<any> = Option.of(definedValue)
       expect(fullOption.get()).toEqual(definedValue)
     })
     it("should let the user create an Option with a possibly undefined value", async () => {
-      const option: Option = Option.of(undefinedValue)
+      const option: Option<any> = Option.of(undefinedValue)
       expect(option.get()).toEqual(undefinedValue)
     })
   })
@@ -92,16 +92,29 @@ describe("In the Option extension", () => {
     })
   })
 
-  describe("tapEach", () => {
+  describe("ifPresent", () => {
     it("should let the user optionally use the content of the Option", async () => {
       const someSpy = vi.fn()
-      some.tapEach(someSpy)
+      some.ifPresent(someSpy)
       expect(someSpy).toBeCalledTimes(1)
     })
     it("should not use the content of the Option if empty", async () => {
       const noneSpy = vi.fn()
-      none.tapEach(noneSpy)
+      none.ifPresent(noneSpy)
       expect(noneSpy).not.toBeCalled()
+    })
+  })
+
+  describe("ifEmpty", () => {
+    it("should let the user execute a callback if the Option is empty", async () => {
+      const noneSpy = vi.fn()
+      none.ifEmpty(noneSpy)
+      expect(noneSpy).toBeCalledTimes(1)
+    })
+    it("should execute the callback if the Option is not empty", async () => {
+      const someSpy = vi.fn()
+      some.ifEmpty(someSpy)
+      expect(someSpy).not.toBeCalled()
     })
   })
 })
