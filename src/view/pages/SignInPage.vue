@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import {AuthenticationErrorType} from "@/logic/data/authentication/authentication-error";
 import {FormCause, FormError, validateEmail, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import {InjectionKeys} from "@/injection-keys";
+import {onMounted, ref} from "vue";
+import router from "@/router";
 
 const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
 
@@ -16,12 +19,30 @@ const form = ref({
   error: FormError.none,
 })
 
+onMounted(() =>
+  authenticationService.value
+    .sessionManager()
+    .session()
+    .ifPresent(() => router.push({ name: 'homepage' }))
+)
+
 function onSubmit(event: Event){
   event.preventDefault()
-  console.log(form.value)
   if (validateForm()) {
-    console.log("VALIDATED")
-    // TODO call sign in on authentication service
+    authenticationService.value
+      .registerUser(form.value.username, form.value.email, form.value.password)
+      .then(_ => _
+        .ifSuccess(() => router.push({ name: "homepage" }))
+        .ifFailure(error => {
+          switch (error?.type) {
+            case AuthenticationErrorType.UsernameAlreadyTakenException:
+              form.value.error = new FormError(FormCause.Username, "Username already taken.")
+              break;
+            default:
+              console.error(error)
+          }
+        })
+      )
   }
 }
 
