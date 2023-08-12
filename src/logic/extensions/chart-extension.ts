@@ -31,7 +31,7 @@ export function getChartData(xs: any, ...ys: { values: any[], name?: string, col
       data: y.values,
       fill: false,
       borderColor: y.color ?? getComputedStyle(document.documentElement).getPropertyValue('--blue-500'),
-      tension: 0
+      tension: 0,
     })),
   };
 }
