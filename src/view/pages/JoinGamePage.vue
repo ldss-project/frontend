@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import {FormCause, FormError, validateGameId} from "@/logic/extensions/form-extension";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {ref} from "vue";
-import {FormCause, FormError, validateGameId} from "@/logic/extensions/form-extension";
 
 const form = ref({
   gameId: "",

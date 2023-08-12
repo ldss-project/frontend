@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import {FormCause, FormError, validateEmail, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
-import {ref} from "vue";
-import {FormCause, FormError, validateEmail, validatePassword, validateUsername} from "@/logic/extensions/form-extension";
+import {InjectionKeys} from "@/injection-keys";
+
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
 
 const form = ref({
   username: "",

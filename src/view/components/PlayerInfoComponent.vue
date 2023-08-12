@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import {Durations} from "@/logic/data/game/duration";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
-import {computed, inject, type Ref} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+import {computed} from "vue";
 
-const context: Ref<EnrichedChessGame> = inject<EnrichedChessGame>('game-context')
+const context = injectStrict(InjectionKeys.GameContext)
 
 const props = withDefaults(defineProps<{
   playerName?: string,

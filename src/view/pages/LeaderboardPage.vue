@@ -2,10 +2,10 @@
 import {leaderboardPlaceholder} from "@/assets/placeholders";
 import ErrorText from "@/view/components/ErrorText.vue";
 import {FormCause, FormError, validateRank} from "@/logic/extensions/form-extension";
-import {type UserScore} from "@/logic/data/score";
-import router from "@/router";
+import {UserScore} from "@/logic/data/statistics/score";
 import {debounce} from "lodash";
 import {ref, watch} from "vue";
+import router from "@/router";
 
 const leaderboardWindow = 15
 const shiftWindow = leaderboardWindow

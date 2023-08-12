@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {injectStrict} from "@/logic/extensions/vue-extension";
+import {InjectionKeys} from "@/injection-keys";
 import {onMounted} from "vue";
 import router from "@/router";
 

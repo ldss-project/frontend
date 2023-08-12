@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import {GameOverCause} from "@/logic/data/game/result";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 import PopupComponent from "@/view/components/PopupComponent.vue";
-import {type Ref, computed, inject} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+import {computed} from "vue";
 
-const context: Ref<EnrichedChessGame> = inject<EnrichedChessGame>('game-context')
+const context = injectStrict(InjectionKeys.GameContext)
 
 const resultMessage = computed(() => {
   let causeMessage: string = ""

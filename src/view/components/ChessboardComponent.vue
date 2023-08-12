@@ -3,11 +3,12 @@ import {Positions} from "@/logic/data/game/position";
 import {Ranks} from "@/logic/data/game/rank";
 import {Files} from "@/logic/data/game/file";
 import {Team} from "@/logic/data/game/team";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import ChessCellComponent from "@/view/components/ChessboardCellComponent.vue";
-import {computed, inject, type Ref} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+import {computed} from "vue";
 
-const context: Ref<EnrichedChessGame> = inject<EnrichedChessGame>('game-context')
+const context = injectStrict(InjectionKeys.GameContext)
 
 defineEmits(['cell-clicked'])
 
