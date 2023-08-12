@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {AuthenticationErrorType} from "@/logic/data/authentication/authentication-error";
 import {FormCause, FormError, validatePassword} from "@/logic/extensions/form-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
@@ -20,19 +21,51 @@ const form = ref({
 })
 
 onMounted(() => {
-  /* TODO retrieve and set actual user information */
-  let currentUser: string = router.currentRoute.value.params.username as string
-  form.value.username = currentUser
-  form.value.email = "user@placeholder.com "
+  authenticationService.value
+    .sessionManager()
+    .session()
+    .ifPresent(() => {
+      authenticationService.value
+        .getUserInformation(router.currentRoute.value.params.username as string)
+        .then(_ => _
+          .ifSuccess(user => {
+            form.value.username = user.username
+            form.value.email = user.email
+          })
+          .ifFailure(error => {
+            switch (error.type) {
+              case AuthenticationErrorType.TokenExpiredException:
+              case AuthenticationErrorType.UserNotAuthorizedException:
+                router.push({ name: 'homepage' })
+                break;
+              default:
+                console.error(error)
+            }
+          })
+        )
+    })
+    .ifEmpty(() => router.push({ name: 'homepage' }))
 })
 
 function onSubmit(event: Event){
   event.preventDefault()
   console.log(form.value)
   if (validateForm()) {
-    console.log("VALIDATED")
-    // TODO call update password on authentication service
-    setIsUpdating(false)
+    authenticationService.value
+      .updatePassword(form.value.password)
+      .then(_ => _
+        .ifSuccess(() => setIsUpdating(false))
+        .ifFailure(error => {
+          switch (error.type) {
+            case AuthenticationErrorType.TokenExpiredException:
+            case AuthenticationErrorType.UserNotAuthorizedException:
+              router.push({ name: 'homepage' })
+              break;
+            default:
+              console.error(error)
+          }
+        })
+      )
   }
 }
 
