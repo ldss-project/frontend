@@ -1,6 +1,6 @@
 import type {InjectionKey, Ref} from "vue";
-import {AuthenticationProxy} from "@/logic/proxies/authentication-proxy";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
+import {AuthenticationProxy} from "@/logic/proxies/authentication/authentication-proxy";
+import {EnrichedChessGame} from "@/logic/proxies/game/data/enriched/game";
 import {provide, inject} from "vue";
 
 /**

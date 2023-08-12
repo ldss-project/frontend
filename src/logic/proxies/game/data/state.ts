@@ -1,7 +1,7 @@
-import {type ChessGamePerspective} from "@/logic/data/game/perspective";
-import {type ChessGameResult} from "@/logic/data/game/result";
-import {type ChessGameSituation} from "@/logic/data/game/situation";
-import {Team} from "@/logic/data/game/team";
+import {type ChessGamePerspective} from "@/logic/proxies/game/data/perspective";
+import {type ChessGameResult} from "@/logic/proxies/game/data/result";
+import {type ChessGameSituation} from "@/logic/proxies/game/data/situation";
+import {Team} from "@/logic/proxies/game/data/team";
 
 
 /** The state of a {@link ChessGame}. */

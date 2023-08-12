@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {scoreHistoryPlaceholder} from "@/assets/placeholders";
-import {type UserScoreHistory} from "@/logic/data/statistics/score";
+import {type UserScoreHistory} from "@/logic/proxies/statistics/data/score";
 import {getChartData, timeScale} from "@/logic/extensions/chart-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import "chartjs-adapter-date-fns";

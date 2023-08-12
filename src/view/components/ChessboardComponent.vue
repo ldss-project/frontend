@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {Positions} from "@/logic/data/game/position";
-import {Ranks} from "@/logic/data/game/rank";
-import {Files} from "@/logic/data/game/file";
-import {Team} from "@/logic/data/game/team";
+import {Positions} from "@/logic/proxies/game/data/position";
+import {Ranks} from "@/logic/proxies/game/data/rank";
+import {Files} from "@/logic/proxies/game/data/file";
+import {Team} from "@/logic/proxies/game/data/team";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import ChessCellComponent from "@/view/components/ChessboardCellComponent.vue";
 import {InjectionKeys} from "@/injection-keys";

@@ -1,6 +1,6 @@
-import {type ChessGame} from "@/logic/data/game/game";
-import {type ChessGameServer} from "@/logic/data/game/server";
-import {EnrichedChessGameState} from "@/logic/data/game/enriched/state";
+import {type ChessGame} from "@/logic/proxies/game/data/game";
+import {type ChessGameServer} from "@/logic/proxies/game/data/server";
+import {EnrichedChessGameState} from "@/logic/proxies/game/data/enriched/state";
 
 /** A decorated {@link ChessGame}. */
 export class EnrichedChessGame implements ChessGame {

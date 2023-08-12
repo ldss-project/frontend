@@ -1,5 +1,5 @@
-import {type Position} from "@/logic/data/game/position";
-import {type Piece} from "@/logic/data/game/piece";
+import {type Position} from "@/logic/proxies/game/data/position";
+import {type Piece} from "@/logic/proxies/game/data/piece";
 
 /** A move in a {@link ChessGame}. */
 export interface Move {

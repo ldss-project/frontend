@@ -1,4 +1,4 @@
-import {type Position} from "@/logic/data/game/position";
+import {type Position} from "@/logic/proxies/game/data/position";
 
 /** A piece in a {@link Chessboard} of a {@link ChessGame}. */
 export interface Piece {

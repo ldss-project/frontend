@@ -1,12 +1,12 @@
-import {type ChessGameState} from "@/logic/data/game/state";
-import {type ChessGameResult} from "@/logic/data/game/result";
-import {type Position} from "@/logic/data/game/position";
-import {type ChessGameSituation} from "@/logic/data/game/situation";
-import {Team, Teams} from "@/logic/data/game/team";
+import {type ChessGameState} from "@/logic/proxies/game/data/state";
+import {type ChessGameResult} from "@/logic/proxies/game/data/result";
+import {type Position} from "@/logic/proxies/game/data/position";
+import {type ChessGameSituation} from "@/logic/proxies/game/data/situation";
+import {Team, Teams} from "@/logic/proxies/game/data/team";
+import {EnrichedChessGame} from "@/logic/proxies/game/data/enriched/game";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
+import {EnrichedChessGamePerspective} from "@/logic/proxies/game/data/enriched/perspective";
 import {Option} from "@/logic/extensions/option-extension";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
-import {EnrichedChessGamePerspective} from "@/logic/data/game/enriched/perspective";
 
 /** A decorated {@link ChessGameState}. */
 export class EnrichedChessGameState implements ChessGameState {

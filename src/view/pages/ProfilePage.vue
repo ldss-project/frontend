@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {AuthenticationErrorType} from "@/logic/data/authentication/authentication-error";
+import {AuthenticationErrorType} from "@/logic/proxies/authentication/data/authentication-error";
 import {FormCause, FormError, validatePassword} from "@/logic/extensions/form-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";

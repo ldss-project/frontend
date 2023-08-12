@@ -1,5 +1,5 @@
-import {type ChessGameServer} from "@/logic/data/game/server";
-import {type ChessGameState} from "@/logic/data/game/state";
+import {type ChessGameServer} from "@/logic/proxies/game/data/server";
+import {type ChessGameState} from "@/logic/proxies/game/data/state";
 
 /** A game of chess. */
 export interface ChessGame {

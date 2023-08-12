@@ -1,5 +1,5 @@
-import {type Piece} from "@/logic/data/game/piece";
-import {type Move} from "@/logic/data/game/move";
+import {type Piece} from "@/logic/proxies/game/data/piece";
+import {type Move} from "@/logic/proxies/game/data/move";
 
 /** A chessboard in a {@link ChessGame} from the perspective of a {@link Player}. */
 export interface Chessboard {

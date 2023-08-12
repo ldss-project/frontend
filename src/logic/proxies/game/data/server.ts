@@ -1,4 +1,4 @@
-import {type ChessGameServerError} from "@/logic/data/game/server-error";
+import {type ChessGameServerError} from "@/logic/proxies/game/data/server-error";
 
 /** A server hosting a {@link ChessGame}. */
 export interface ChessGameServer {

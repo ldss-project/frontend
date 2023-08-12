@@ -1,4 +1,4 @@
-import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
+import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 
 const pieceImageBasePath = "/chess-pieces"
 

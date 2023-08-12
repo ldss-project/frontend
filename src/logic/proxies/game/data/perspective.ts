@@ -1,7 +1,7 @@
-import {type Player} from "@/logic/data/game/player";
-import {type Chessboard} from "@/logic/data/game/chessboard";
-import {type Move} from "@/logic/data/game/move";
-import {type Duration} from "@/logic/data/game/duration";
+import {type Player} from "@/logic/proxies/game/data/player";
+import {type Chessboard} from "@/logic/proxies/game/data/chessboard";
+import {type Move} from "@/logic/proxies/game/data/move";
+import {type Duration} from "@/logic/proxies/game/data/duration";
 
 /** The state of a {@link ChessGame} from the perspective of a {@link Player}. */
 export interface ChessGamePerspective {

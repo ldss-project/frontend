@@ -1,4 +1,4 @@
-import {type Token} from "@/logic/data/authentication/token";
+import {type Token} from "@/logic/proxies/authentication/data/token";
 
 /**
  * A session of a user in the authentication service.
