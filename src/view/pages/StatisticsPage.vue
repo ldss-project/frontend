@@ -5,6 +5,7 @@ import {injectStrict} from "@/logic/extensions/vue-extension";
 import {getChartData, timeScale} from "@/logic/extensions/chart-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import "chartjs-adapter-date-fns";
+import zoomPlugin from "chartjs-plugin-zoom"
 import Chart from "primevue/chart";
 import {InjectionKeys} from "@/injection-keys";
 import {onMounted, ref} from "vue";
@@ -33,6 +34,24 @@ onMounted(() => {
       })
     )
 })
+
+const chartOptions = {
+  maintainAspectRatio: false,
+  scales: {
+    x: timeScale,
+    y: { min: 0, suggestedMax: 4 },
+  },
+  spanGaps: true,
+  plugins: {
+    zoom: {
+      zoom: {
+        drag: { enabled: true, },
+        mode: 'xy',
+      },
+      limits: { y: { min: 0, }, },
+    }
+  }
+}
 </script>
 
 <template>
@@ -101,15 +120,16 @@ onMounted(() => {
   </FormComponent>
   <div class="card">
     <Chart
+      @dblclick="$refs.ratioChart.getChart().resetZoom()"
+      ref="ratioChart"
       type="line"
+      :plugins="[zoomPlugin]"
       :data="getChartData(
         userScoreHistory.latestScores.map(s => new Date(s.insertion.$date)),
         { name: 'Ratio', values: userScoreHistory.latestScores.map(s => s.ratio), }
       )"
-      :options="{
-        maintainAspectRatio: false,
-        scales: { x: timeScale },
-      }"
+      :options="chartOptions"
+      :canvasProps="{'role': 'img', 'aria-label': `Score history of ${userScoreHistory.username}`}"
     />
   </div>
 </template>
