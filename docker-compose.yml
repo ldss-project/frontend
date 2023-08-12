@@ -7,13 +7,15 @@ services:
       - --mongodb-connection
       - "${AUTHENTICATION_MONGODB_CONNECTION:?the authentication service won't be able to connect to MongoDB}"
       - --mongodb-database
-      - "authentication"
+      - "${AUTHENTICATION_MONGODB_DATABASE:-authentication}"
       - --mongodb-collection
-      - "users"
+      - "${AUTHENTICATION_MONGODB_COLLECTION:-users}"
       - --http-host
       - "0.0.0.0"
       - --http-port
       - "8080"
+      - --allowed-origins
+      - "${AUTHENTICATION_ALLOWED_ORIGINS:-*;}"
     ports:
       - "${HOSTNAME:-127.0.0.1}:${AUTHENTICATION_SERVICE_PORT:-8081}:8080"
     restart: always
@@ -24,13 +26,15 @@ services:
       - --mongodb-connection
       - "${STATISTICS_MONGODB_CONNECTION:?the statistics service won't be able to connect to MongoDB}"
       - --mongodb-database
-      - "statistics"
+      - "${STATISTICS_MONGODB_DATABASE:-statistics}"
       - --mongodb-collection
-      - "scores"
+      - "${STATISTICS_MONGODB_COLLECTION:-scores}"
       - --http-host
       - "0.0.0.0"
       - --http-port
       - "8080"
+      - --allowed-origins
+      - "${STATISTICS_ALLOWED_ORIGINS:-*;}"
     ports:
       - "${HOSTNAME:-127.0.0.1}:${STATISTICS_SERVICE_PORT:-8082}:8080"
     restart: always
@@ -47,6 +51,8 @@ services:
   #     - "0.0.0.0"
   #     - --http-port
   #     - "8080"
+  #     - --allowed-origins
+  #     - "${CHESS_GAME_SERVICE_ALLOWED_ORIGINS:-*;}"
   #   ports:
   #     - "${HOSTNAME:-127.0.0.1}:${CHESS_GAME_SERVICE_PORT:-8083}:8080"
   #   restart: always
