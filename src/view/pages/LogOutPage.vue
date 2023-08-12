@@ -16,5 +16,9 @@ onMounted(() =>
     )
 )
 
-function _avoid_export_error(){}
+function avoid_export_errors(){}
 </script>
+
+<template><span></span></template>
+
+<style lang="scss" scoped></style>
