@@ -11,7 +11,7 @@ export interface RuntimeEnvironment {
 /** The runtime environment of this application. */
 export const runtimeEnvironment: RuntimeEnvironment =
   import.meta.env.VITE_RUNTIME_ENVIRONMENT ?? {
-    AUTHENTICATION_SERVICE: "localhost:8081",
-    STATISTICS_SERVICE: "localhost:8082",
-    CHESS_GAME_SERVICE: "localhost:8083",
+    AUTHENTICATION_SERVICE: "127.0.0.1:8081",
+    STATISTICS_SERVICE: "127.0.0.1:8082",
+    CHESS_GAME_SERVICE: "127.0.0.1:8083",
   }
