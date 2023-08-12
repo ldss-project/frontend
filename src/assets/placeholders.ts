@@ -7,7 +7,7 @@ import {File} from "@/logic/data/game/file";
 import {Rank} from "@/logic/data/game/rank";
 import {Moves} from "@/logic/data/game/move";
 import {Durations, TimeUnit} from "@/logic/data/game/duration";
-import {type UserScore, type UserScoreHistory} from "@/logic/data/score";
+import {type UserScore, type UserScoreHistory} from "@/logic/data/statistics/score";
 import {Arrays} from "@/logic/extensions/array-extension";
 import {ChessGameServerErrorType} from "@/logic/data/game/server-error";
 import {ChessGameSituationType} from "@/logic/data/game/situation";

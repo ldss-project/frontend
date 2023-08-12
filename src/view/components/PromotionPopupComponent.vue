@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import {Pieces} from "@/logic/data/game/piece";
 import {Option} from "@/logic/extensions/option-extension";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
 import PopupComponent from "@/view/components/PopupComponent.vue";
 import ChessboardCellComponent from "@/view/components/ChessboardCellComponent.vue";
-import {type Ref, computed, inject} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+import {computed} from "vue";
 
-const context: Ref<EnrichedChessGame> = inject<EnrichedChessGame>('game-context')
+const context = injectStrict(InjectionKeys.GameContext)
 
 defineEmits(['promotion-piece-chosen'])
 

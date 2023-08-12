@@ -4,13 +4,14 @@ import {type Position} from "@/logic/data/game/position";
 import {Ranks} from "@/logic/data/game/rank";
 import {type Move} from "@/logic/data/game/move";
 import {Files} from "@/logic/data/game/file";
-import {EnrichedChessGame} from "@/logic/data/game/enriched/game";
 import {EnrichedPiece} from "@/logic/data/game/enriched/piece";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import {haveSameParity} from "@/logic/extensions/number-extension";
+import {InjectionKeys} from "@/injection-keys";
 import {isEqual} from "lodash";
-import {type Ref, inject, computed} from "vue";
+import {computed} from "vue";
 
-const context: Ref<EnrichedChessGame> = inject<EnrichedChessGame>('game-context')
+const context = injectStrict(InjectionKeys.GameContext)
 
 const props = defineProps<{
   position: Position,

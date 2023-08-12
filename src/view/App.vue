@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import NavBarComponent from "@/view/components/NavBarComponent.vue";
+import {AuthenticationProxy} from "@/logic/proxies/authentication-proxy";
+import {runtimeEnvironment} from "@/runtime-environment";
+import {RouterView} from 'vue-router'
+import {provide, type Ref, ref} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+
+const authenticationService = ref(new AuthenticationProxy(runtimeEnvironment.AUTHENTICATION_SERVICE))
+provide(InjectionKeys.AuthenticationService, authenticationService as Ref<AuthenticationProxy>)
+
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {TimeConstraints} from "@/logic/data/time-constraint";
+import {TimeConstraint} from "@/logic/data/game/time-constraint";
 import {FormCause, FormError, validateGameDuration, validateGameId} from "@/logic/extensions/form-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
@@ -7,7 +7,7 @@ import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import {ref} from "vue";
 
 const form = ref({
-  timeConstraint: TimeConstraints.NoLimit,
+  timeConstraint: TimeConstraint.NoLimit,
   timeMinutes: 5,
   isPrivate: false,
   gameId: "",
@@ -15,9 +15,9 @@ const form = ref({
 })
 
 const timeConstraintOptions = [
-  { value: TimeConstraints.NoLimit, name: "No Limit" },
-  { value: TimeConstraints.MoveLimit, name: "Move Limit" },
-  { value: TimeConstraints.PlayerLimit, name: "Player Limit" },
+  { value: TimeConstraint.NoLimit, name: "No Limit" },
+  { value: TimeConstraint.MoveLimit, name: "Move Limit" },
+  { value: TimeConstraint.PlayerLimit, name: "Player Limit" },
 ]
 
 function onSubmit(event: Event){
@@ -36,7 +36,7 @@ function validateForm(){
     validateGameId(form.value.gameId, form.value.isPrivate)?.withMessage("Game identifier required for a private game.")
   return form.value.error === FormError.none
 }
-function hasTimeConstraint(): boolean { return form.value.timeConstraint !== TimeConstraints.NoLimit }
+function hasTimeConstraint(): boolean { return form.value.timeConstraint !== TimeConstraint.NoLimit }
 function isPrivate(): boolean { return form.value.isPrivate }
 </script>
 

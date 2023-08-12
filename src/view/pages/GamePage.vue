@@ -12,10 +12,20 @@ import ErrorPopupComponent from "@/view/components/ErrorPopupComponent.vue";
 import GameOverPopupComponent from "@/view/components/GameOverPopupComponent.vue";
 import LobbyPopupComponent from "@/view/components/LobbyPopupComponent.vue";
 import PromotionPopupComponent from "@/view/components/PromotionPopupComponent.vue";
-import {computed, onMounted, onUnmounted, provide, ref} from "vue";
+import {InjectionKeys} from "@/injection-keys";
+import {computed, onMounted, onUnmounted, provide, type Ref, ref} from "vue";
 
 const chessGame = ref(EnrichedChessGame.none)
-provide('game-context', chessGame)
+provide(InjectionKeys.GameContext, chessGame as Ref<EnrichedChessGame>)
+
+onMounted(() => {
+  /* TODO connect to game service websocket */
+  chessGame.value = new EnrichedChessGame(
+      chessGamePlaceholder(),
+      "PlayerWhite" /* TODO get actual username */
+  )
+})
+onUnmounted(() => { /* TODO disconnect from game service websocket */ })
 
 const isWaitingForPlayers = computed(() =>
   chessGame.value?.server.state === ChessGameServerState.WaitingForPlayers
@@ -31,7 +41,7 @@ const isPromotion = computed(() =>
 function onCellClicked(position: Position){
   console.log(position)
 
-  Option.of(chessGame.value?.state.perspectiveOfThisPlayer()).tapEach(_ => {
+  Option.of(chessGame.value?.state.perspectiveOfThisPlayer()).ifPresent(_ => {
     _.selectedPosition = undefined
     if (_.pieceAt(position) !== undefined) {
       _.selectedPosition = position
@@ -46,15 +56,6 @@ function onPromotionPieceChosen(piece: EnrichedPiece){
   console.log(piece.type)
   /* TODO call promote on game service websocket */
 }
-
-onMounted(() => {
-  /* TODO connect to game service websocket */
-  chessGame.value = new EnrichedChessGame(
-    chessGamePlaceholder(),
-    "PlayerWhite" /* TODO get actual username */
-  )
-})
-onUnmounted(() => { /* TODO disconnect from game service websocket */ })
 </script>
 
 <template>

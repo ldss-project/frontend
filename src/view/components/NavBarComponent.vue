@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
+import {InjectionKeys} from "@/injection-keys";
 
 // TODO Find if the user is a guest or is authenticated
 const isGuest = true
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
 
 const guestLinks = [
   { to: { name: "log-in" }, text: "Log in" },
