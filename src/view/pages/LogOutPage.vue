@@ -15,8 +15,6 @@ onMounted(() =>
       router.push({ name: 'homepage' })
     )
 )
+
+function _avoid_export_error(){}
 </script>
-
-<template></template>
-
-<style lang="scss" scoped></style>
