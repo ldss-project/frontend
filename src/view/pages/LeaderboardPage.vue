@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import {leaderboardPlaceholder} from "@/assets/placeholders";
-import {type UserScore} from "@/logic/proxies/statistics/data/score";
+import {injectStrict} from "@/logic/extensions/vue-extension";
+import {type UserScore} from "@/logic/proxies/statistics/data/user-score";
 import {FormCause, FormError, validateRank} from "@/logic/extensions/form-extension";
 import ErrorText from "@/view/components/ErrorText.vue";
+import {InjectionKeys} from "@/injection-keys";
 import {debounce} from "lodash";
 import {ref, watch} from "vue";
 import router from "@/router";
+
+const statisticsService = injectStrict(InjectionKeys.StatisticsService)
 
 const leaderboardWindow = 15
 const shiftWindow = leaderboardWindow
@@ -19,10 +22,13 @@ watch(rank, debounce(updateLeaderboard, rankDebouncingMilliseconds), { deep: tru
 updateLeaderboard(rank.value)
 
 function updateLeaderboard(firstRank: number) {
-  console.log(firstRank)
   if (validateForm()) {
-    // TODO retrieve ranks starting from the first rank
-    scores.value = leaderboardPlaceholder(firstRank, leaderboardWindow)
+    statisticsService.value
+      .getLeaderboard(firstRank, firstRank + leaderboardWindow)
+      .then(_ => _
+        .ifSuccess(leaderboard => scores.value = leaderboard)
+        .ifFailure(console.log)
+      )
   }
 }
 function visitStatistics(username: string) {
