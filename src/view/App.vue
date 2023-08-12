@@ -5,9 +5,13 @@ import {runtimeEnvironment} from "@/runtime-environment";
 import {RouterView} from 'vue-router'
 import {provide, type Ref, ref} from "vue";
 import {InjectionKeys} from "@/injection-keys";
+import {StatisticsProxy} from "@/logic/proxies/statistics/statistics-proxy";
 
 const authenticationService = ref(new AuthenticationProxy(runtimeEnvironment.AUTHENTICATION_SERVICE))
+const statisticsService = ref(new StatisticsProxy(runtimeEnvironment.STATISTICS_SERVICE))
+
 provide(InjectionKeys.AuthenticationService, authenticationService as Ref<AuthenticationProxy>)
+provide(InjectionKeys.StatisticsService, statisticsService as Ref<StatisticsProxy>)
 
 </script>
 
