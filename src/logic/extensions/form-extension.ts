@@ -46,6 +46,7 @@ export class FormError {
 
   /**
    * Create a new {@link FormError} with the specified cause and description.
+   *
    * @param cause the specified cause.
    * @param message the specified description.
    */

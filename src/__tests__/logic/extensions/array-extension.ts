@@ -1,8 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {Arrays} from "@/logic/extensions/array-extension";
-import Int = Arrays.Int;
 
-const negativeLength: Int = -10
+const negativeLength: number = -10
 function charSuccessor(char: string): string { return String.fromCharCode(char.charCodeAt(0) + 1) }
 
 describe("In the Array extension", () => {
