@@ -9,7 +9,11 @@ plugins:
   - "@semantic-release/changelog"
 
   # Publish on GitHub
-  - "@semantic-release/github"
+  - - "@semantic-release/github"
+    - assets:
+      - path: "docker-compose.yml"
+      - path: ".env.public"
+        name: ".env"
 
   # Publish on Docker
   - - '@codedependant/semantic-release-docker'
