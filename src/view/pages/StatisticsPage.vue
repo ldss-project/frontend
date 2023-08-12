@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import {scoreHistoryPlaceholder} from "@/assets/placeholders";
-import {type UserScoreHistory} from "@/logic/proxies/statistics/data/score";
+import {StatisticsErrorType} from "@/logic/proxies/statistics/data/statistics-error";
+import {type UserScoreHistory} from "@/logic/proxies/statistics/data/user-score-history";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import {getChartData, timeScale} from "@/logic/extensions/chart-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import "chartjs-adapter-date-fns";
 import Chart from "primevue/chart";
+import {InjectionKeys} from "@/injection-keys";
 import {onMounted, ref} from "vue";
 import router from "@/router";
+
+const statisticsService = injectStrict(InjectionKeys.StatisticsService)
 
 const userScoreHistory = ref<UserScoreHistory>({
   username: router.currentRoute.value.params.username as string,
@@ -14,9 +18,20 @@ const userScoreHistory = ref<UserScoreHistory>({
 })
 
 onMounted(() => {
-  // TODO call get score history from statistics service
-  userScoreHistory.value.latestScores = []
-  userScoreHistory.value.latestScores = scoreHistoryPlaceholder().latestScores
+  statisticsService.value
+    .getUserScoreHistory(userScoreHistory.value.username)
+    .then(_ => _
+      .ifSuccess(userScores => userScoreHistory.value.latestScores = userScores)
+      .ifFailure(error => {
+        switch (error.type) {
+          case StatisticsErrorType.UserNotFoundException:
+            router.push({name: "not-found"})
+            break;
+          default:
+            console.log(error)
+        }
+      })
+    )
 })
 </script>
 
@@ -88,7 +103,7 @@ onMounted(() => {
     <Chart
       type="line"
       :data="getChartData(
-        userScoreHistory.latestScores.map(s => s.insertion),
+        userScoreHistory.latestScores.map(s => new Date(s.insertion.$date)),
         { name: 'Ratio', values: userScoreHistory.latestScores.map(s => s.ratio), }
       )"
       :options="{
