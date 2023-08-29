@@ -1,7 +1,8 @@
-import type {InjectionKey, Ref} from "vue";
 import {AuthenticationProxy} from "@/logic/proxies/authentication/authentication-proxy";
 import {StatisticsProxy} from "@/logic/proxies/statistics/statistics-proxy";
-import {EnrichedChessGame} from "@/logic/proxies/game/data/enriched/game";
+import {ChessGameProxy} from "@/logic/proxies/game/chess-game-proxy";
+import {RelativeChessGameServer} from "@/logic/proxies/game/data/enriched/relative-chess-game-server";
+import type {InjectionKey, Ref} from "vue";
 import {provide, inject} from "vue";
 
 /**
@@ -18,7 +19,10 @@ export class InjectionKeys {
   /** Injection key for an {@link StatisticsProxy}. */
   public static StatisticsService =
     Symbol('StatisticsService') as InjectionKey<Ref<StatisticsProxy>>
-  /** Injection key for an {@link EnrichedChessGame}. */
-  public static GameContext =
-    Symbol('GameContext') as InjectionKey<Ref<EnrichedChessGame>>
+  /** Injection key for a {@link ChessGameProxy}. */
+  public static ChessGameService =
+    Symbol('ChessGameProxy') as InjectionKey<Ref<ChessGameProxy>>
+  /** Injection key for an {@link ChessGameServer}. */
+  public static ChessGameServer =
+    Symbol('ChessGameServer') as InjectionKey<Ref<RelativeChessGameServer>>
 }
