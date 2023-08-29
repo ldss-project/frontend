@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import {AuthenticationProxy} from "@/logic/proxies/authentication/authentication-proxy";
+import {StatisticsProxy} from "@/logic/proxies/statistics/statistics-proxy";
+import {ChessGameProxy} from "@/logic/proxies/game/chess-game-proxy";
 import NavBarComponent from "@/view/components/NavBarComponent.vue";
+import {InjectionKeys} from "@/injection-keys";
 import {runtimeEnvironment} from "@/runtime-environment";
 import {RouterView} from 'vue-router'
 import {provide, type Ref, ref} from "vue";
-import {InjectionKeys} from "@/injection-keys";
-import {StatisticsProxy} from "@/logic/proxies/statistics/statistics-proxy";
 
 const authenticationService = ref(new AuthenticationProxy(runtimeEnvironment.AUTHENTICATION_SERVICE))
 const statisticsService = ref(new StatisticsProxy(runtimeEnvironment.STATISTICS_SERVICE))
+const chessGameService = ref(new ChessGameProxy(runtimeEnvironment.CHESS_GAME_SERVICE))
 
 provide(InjectionKeys.AuthenticationService, authenticationService as Ref<AuthenticationProxy>)
 provide(InjectionKeys.StatisticsService, statisticsService as Ref<StatisticsProxy>)
+provide(InjectionKeys.ChessGameService, chessGameService as Ref<ChessGameProxy>)
 
 </script>
 
