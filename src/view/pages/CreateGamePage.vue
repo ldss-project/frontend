@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import {TimeConstraint} from "@/logic/proxies/game/data/time-constraint";
+import {ChessGameErrorType} from "@/logic/proxies/game/data/chess-game-error";
+import {Durations} from "@/logic/proxies/game/data/duration";
+import {Team} from "@/logic/proxies/game/data/team";
+import {TimeConstraintType} from "@/logic/proxies/game/data/time-constraint-type";
+import {TimeUnit} from "@/logic/proxies/game/data/time-unit";
 import {FormCause, FormError, validateGameDuration, validateGameId} from "@/logic/extensions/form-extension";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import FormComponent from "@/view/components/FormComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
+import {InjectionKeys} from "@/injection-keys";
 import {ref} from "vue";
+import router from "@/router";
+
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
+const chessGameService = injectStrict(InjectionKeys.ChessGameService)
 
 const form = ref({
-  timeConstraint: TimeConstraint.NoLimit,
+  timeConstraintType: TimeConstraintType.NoLimit,
   timeMinutes: 5,
   isPrivate: false,
   gameId: "",
@@ -15,18 +25,43 @@ const form = ref({
 })
 
 const timeConstraintOptions = [
-  { value: TimeConstraint.NoLimit, name: "No Limit" },
-  { value: TimeConstraint.MoveLimit, name: "Move Limit" },
-  { value: TimeConstraint.PlayerLimit, name: "Player Limit" },
+  { value: TimeConstraintType.NoLimit, name: "No Limit" },
+  { value: TimeConstraintType.MoveLimit, name: "Move Limit" },
+  { value: TimeConstraintType.PlayerLimit, name: "Player Limit" },
 ]
 
 function onSubmit(event: Event){
   event.preventDefault()
   console.log(form.value)
   if (validateForm()) {
-    console.log("VALIDATED")
-    // TODO call create game on game service
-    // TODO call join private game on game service
+    chessGameService.value
+      ?.createGame({
+        timeConstraint: {
+          type: form.value.timeConstraintType,
+          time: Durations.asBson(Durations.of(form.value.timeMinutes, TimeUnit.MINUTES))
+        },
+        isPrivate: form.value.isPrivate,
+        gameId: form.value.gameId === "" ? undefined : form.value.gameId
+      })
+      .then(_ => _
+        .ifSuccess(async playerConnection => {
+          await playerConnection.opened()
+          playerConnection.joinGame({
+            team: Team.White,
+            name: authenticationService.value.sessionManager().sessionUsername().get()
+          })
+          await router.push({name: "game"})
+        })
+        .ifFailure(error => {
+          switch (error.type) {
+            case ChessGameErrorType.GameIdAlreadyTakenException:
+              form.value.error = new FormError(FormCause.GameId, "Game id already taken.")
+              break;
+            default:
+              console.error(error)
+          }
+        })
+      )
   }
 }
 
@@ -36,7 +71,7 @@ function validateForm(){
     validateGameId(form.value.gameId, form.value.isPrivate)?.withMessage("Game identifier required for a private game.")
   return form.value.error === FormError.none
 }
-function hasTimeConstraint(): boolean { return form.value.timeConstraint !== TimeConstraint.NoLimit }
+function hasTimeConstraint(): boolean { return form.value.timeConstraintType !== TimeConstraintType.NoLimit }
 function isPrivate(): boolean { return form.value.isPrivate }
 </script>
 
@@ -52,7 +87,7 @@ function isPrivate(): boolean { return form.value.isPrivate }
         <select
           class="form-select"
           id="timeConstraint"
-          v-model="form.timeConstraint"
+          v-model="form.timeConstraintType"
         >
           <option selected disabled>Choose one...</option>
           <option
@@ -131,8 +166,7 @@ function isPrivate(): boolean { return form.value.isPrivate }
     .input {
       align-self: center;
       input[type=checkbox]:checked { background-color: $palette-dark-primary }
-      input[type=checkbox]:checked.is-invalid { background-color: $palette-dark-error
-      }
+      input[type=checkbox]:checked.is-invalid { background-color: $palette-dark-error }
     }
   }
 
