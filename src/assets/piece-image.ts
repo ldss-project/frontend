@@ -1,4 +1,5 @@
-import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
+import {type Piece} from "@/logic/proxies/game/data/piece";
+import {Team} from "@/logic/proxies/game/data/team";
 
 const pieceImageBasePath = "/chess-pieces"
 
@@ -33,10 +34,11 @@ export enum PieceImage {
 /** Utilities for {@link PieceImage}. */
 export namespace PieceImages {
   /**
-   * @param piece the specified {@link EnrichedPiece}.
-   * @return the {@link PieceImage} for the specified {@link EnrichedPiece}.
+   * @param piece the specified {@link Piece}.
+   * @return the {@link PieceImage} for the specified {@link Piece}.
    */
-  export function of(piece: EnrichedPiece | undefined): string | undefined {
-    return piece ? PieceImage[`${piece.team}${piece.type}`] : undefined;
+  export function of(piece: Piece | undefined): string | undefined {
+    const teamAsString: "White" | "Black" = piece?.team === Team.White ? "White" : "Black"
+    return piece ? PieceImage[`${teamAsString}${piece.type}`] : undefined;
   }
 }
