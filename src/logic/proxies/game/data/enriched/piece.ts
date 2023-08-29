@@ -1,22 +1,20 @@
-import {type Piece, PieceType} from "@/logic/proxies/game/data/piece";
+import {type Piece} from "@/logic/proxies/game/data/piece";
 import {Team} from "@/logic/proxies/game/data/team";
 import {type Position} from "@/logic/proxies/game/data/position";
-import {EnrichedChessboard} from "@/logic/proxies/game/data/enriched/chessboard";
+import {PieceType} from "@/logic/proxies/game/data/piece-type";
 
 /** A decorated {@link Piece}. */
 export class EnrichedPiece implements Piece {
   /** See {@link Piece.type}. */
-  type: PieceType
+  readonly type: PieceType
   /** See {@link Piece.position}. */
-  position: Position
+  readonly position: Position
   /** The {@link Team} who owns this {@link Piece}. */
-  team: Team
-  private context: EnrichedChessboard
+  readonly team: Team
 
-  public constructor(context: EnrichedChessboard, piece: Piece, team: Team) {
-    this.context = context
-    this.team = team
+  public constructor(piece: Piece, position: Position) {
+    this.team = piece.team
     this.type = piece.type
-    this.position = piece.position
+    this.position = position
   }
 }

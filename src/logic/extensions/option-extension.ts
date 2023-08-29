@@ -43,7 +43,7 @@ export class Option<V> {
    * @return true if the content of this {@link Option} is present;
    *         false otherwise.
    */
-  public present(): boolean { return this._value !== undefined }
+  public present(): boolean { return !!this._value }
 
   /**
    * Transforms the content of this {@link Option} using the specified
@@ -55,7 +55,7 @@ export class Option<V> {
    *         the content of this {@link Option}.
    */
   public map<T>(mapper: (source: V) => T | undefined): Option<T> {
-    return new Option<T>(this._value ? mapper(this._value) : undefined)
+    return new Option<T>(this.present() ? mapper(this._value as V) : undefined)
   }
 
   /**
