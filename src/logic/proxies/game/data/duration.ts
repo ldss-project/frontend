@@ -1,3 +1,5 @@
+import {TimeUnit} from "@/logic/proxies/game/data/time-unit";
+
 /** A duration in a {@link ChessGame}. */
 export interface Duration {
   /** The number of {@link TimeUnit}s this {@link Duration} lasts. */
@@ -8,9 +10,10 @@ export interface Duration {
 
 /** Utilities for {@link Duration}. */
 export namespace Durations {
-  const microSecondsToMilliSecondsScale: number = 1_000.0
+  const nanoSecondsToMilliSecondsScale: number = 0.000_001
+  const microSecondsToMilliSecondsScale: number = 0.001
   const milliSecondsToMilliSecondsScale: number = 1.0
-  const secondsToMilliSecondsScale: number = 1000.0
+  const secondsToMilliSecondsScale: number = 1_000.0
   const minutesToMilliSecondsScale: number = 60_000.0
   const hoursToMilliSecondsScale: number = 3_600_000.0
   const daysToMilliSecondsScale: number = 86_400_000.0
@@ -30,22 +33,21 @@ export namespace Durations {
    */
   export function toMilliSeconds(duration: Duration): number {
     switch (duration.unit) {
-      case TimeUnit.MICROSECONDS: return duration.value / microSecondsToMilliSecondsScale
-      case TimeUnit.MILLISECONDS: return duration.value / milliSecondsToMilliSecondsScale
+      case TimeUnit.NANOSECONDS: return duration.value * nanoSecondsToMilliSecondsScale
+      case TimeUnit.MICROSECONDS: return duration.value * microSecondsToMilliSecondsScale
+      case TimeUnit.MILLISECONDS: return duration.value * milliSecondsToMilliSecondsScale
       case TimeUnit.SECONDS: return duration.value * secondsToMilliSecondsScale
       case TimeUnit.MINUTES: return duration.value * minutesToMilliSecondsScale
       case TimeUnit.HOURS: return duration.value * hoursToMilliSecondsScale
       case TimeUnit.DAYS: return duration.value * daysToMilliSecondsScale
     }
   }
-}
 
-/** A time unit for a {@link Duration}. */
-export enum TimeUnit {
-  MICROSECONDS = "MICROSECONDS",
-  MILLISECONDS = "MILLISECONDS",
-  SECONDS = "SECONDS",
-  MINUTES = "MINUTES",
-  HOURS = "HOURS",
-  DAYS = "DAYS",
+  /**
+   * @param duration the specified {@link Duration}.
+   * @return the bson representation of the specified {@link Duration}.
+   */
+  export function asBson(duration: Duration): any {
+    return { value: { $numberLong: duration.value.toString(), }, unit: duration.unit, }
+  }
 }

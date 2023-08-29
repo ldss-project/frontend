@@ -1,16 +1,15 @@
 import {type Piece} from "@/logic/proxies/game/data/piece";
-import {type Move} from "@/logic/proxies/game/data/move";
+import {type Position} from "@/logic/proxies/game/data/position";
 
-/** A chessboard in a {@link ChessGame} from the perspective of a {@link Player}. */
+/**
+ * A chessboard in a {@link ChessGame}.
+ */
 export interface Chessboard {
-  /**
-   * The {@link Piece}s of this {@link Chessboard}
-   * belonging to this {@link Player}.
-   */
-  pieces: Piece[]
-  /**
-   * The {@link Move}s on this {@link Chessboard}
-   * available to this {@link Player}.
-   */
-  moves: Move[]
+  /** The {@link Piece}s on this {@link Chessboard}. */
+  pieces: {
+    /** The {@link Piece} on this {@link Position}. */
+    piece: Piece
+    /** The {@link Position} of this {@link Piece}. */
+    position: Position
+  }[]
 }

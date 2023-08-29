@@ -27,4 +27,14 @@ export namespace Positions {
   export function hashOf(position: Position): string {
     return position.rank.toString().concat(position.file.toString())
   }
+
+  /**
+   * @param p1 the first specified {@link Position}.
+   * @param p2 the second specified {@link Position}.
+   * @return true if the specified {@link Position}s are the same;
+   *         false otherwise.
+   */
+  export function equal(p1: Position, p2: Position): Boolean {
+    return hashOf(p1) === hashOf(p2)
+  }
 }

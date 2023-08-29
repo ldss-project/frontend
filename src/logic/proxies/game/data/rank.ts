@@ -1,21 +1,21 @@
 /** A row in the {@link Chessboard} of a {@link ChessGame}. */
 export enum Rank {
   /** The first row of the {@link Chessboard} from bottom to top. */
-  _1 = "_1",
+  _1 = "1",
   /** The second row of the {@link Chessboard} from bottom to top. */
-  _2 = "_2",
+  _2 = "2",
   /** The third row of the {@link Chessboard} from bottom to top. */
-  _3 = "_3",
+  _3 = "3",
   /** The fourth row of the {@link Chessboard} from bottom to top. */
-  _4 = "_4",
+  _4 = "4",
   /** The fifth row of the {@link Chessboard} from bottom to top. */
-  _5 = "_5",
+  _5 = "5",
   /** The sixth row of the {@link Chessboard} from bottom to top. */
-  _6 = "_6",
+  _6 = "6",
   /** The seventh row of the {@link Chessboard} from bottom to top. */
-  _7 = "_7",
+  _7 = "7",
   /** The eighth row of the {@link Chessboard} from bottom to top. */
-  _8 = "_8",
+  _8 = "8",
 }
 
 /** Utilities for {@link Rank}. */
