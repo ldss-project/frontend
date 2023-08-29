@@ -154,7 +154,7 @@ export class AuthenticationSessionManager {
   public saveSession(session: UserSession): void {
     this.$cookies.set(
       AuthenticationSessionManager.SESSION_COOKIE_NAME, session,
-      { secure: true, sameSite: "none", expires: new Date(session.token.expiration.$date) },
+      { expires: new Date(session.token.expiration.$date) },
     )
   }
 
