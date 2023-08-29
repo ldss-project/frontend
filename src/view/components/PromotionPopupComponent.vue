@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import {Pieces} from "@/logic/proxies/game/data/piece";
+import {Piece, Pieces} from "@/logic/proxies/game/data/piece";
 import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
+import {PromotionChoice} from "@/logic/proxies/game/data/promotion-choice";
+import {PieceType} from "@/logic/proxies/game/data/piece-type";
 import {Option} from "@/logic/extensions/option-extension";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import PopupComponent from "@/view/components/PopupComponent.vue";
@@ -8,24 +10,32 @@ import ChessboardCellComponent from "@/view/components/ChessboardCellComponent.v
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
 defineEmits(['promotion-piece-chosen'])
 
 const choiceBuilders = [Pieces.knight, Pieces.bishop, Pieces.rook, Pieces.queen]
 const pieceChoices = computed(() =>
-  Option.of(context.value.state.situation?.promotingPawnPosition)
-        .flatMap(promotingPawnPosition =>
-          Option.of(context.value.state.perspectiveOfThisPlayer()?.team)
-                .map(thisPlayerTeam =>
-                  choiceBuilders.map(choiceBuilder => {
-                    let pieceChoice = choiceBuilder(promotingPawnPosition) as any
-                    pieceChoice.team = thisPlayerTeam
-                    return pieceChoice as EnrichedPiece
-                  })
-                )
+  Option.of(context.value.gameState.situation?.promotingPawnPosition)
+        .map(promotingPawnPosition =>
+          choiceBuilders.map(choiceBuilder =>
+            new EnrichedPiece(
+              choiceBuilder(context.value.thisPerspective.team()),
+              promotingPawnPosition
+            )
+          )
         ).get()
 )
+
+function toPromotionChoice(piece: Piece): PromotionChoice {
+  switch (piece.type){
+    case PieceType.Knight: return PromotionChoice.Knight
+    case PieceType.Bishop: return PromotionChoice.Bishop
+    case PieceType.Rook: return PromotionChoice.Rook
+    case PieceType.Queen: return PromotionChoice.Queen
+    default: throw Error("No promotion choice corresponds to the specified piece")
+  }
+}
 </script>
 
 <template>
@@ -41,8 +51,8 @@ const pieceChoices = computed(() =>
             :position="pieceChoice.position"
             :force-piece="pieceChoice"
             :tabindex="index+1"
-            @keyup.enter="$emit('promotion-piece-chosen', pieceChoice)"
-            @click="$emit('promotion-piece-chosen', pieceChoice)"
+            @keyup.enter="$emit('promotion-piece-chosen', toPromotionChoice(pieceChoice))"
+            @click="$emit('promotion-piece-chosen', toPromotionChoice(pieceChoice))"
           />
         </div>
       </div>

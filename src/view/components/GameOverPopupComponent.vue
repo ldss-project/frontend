@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import {GameOverCause} from "@/logic/proxies/game/data/result";
+import {GameOverCause} from "@/logic/proxies/game/data/game-over-cause";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import ButtonLinkComponent from "@/view/components/ButtonLinkComponent.vue";
 import PopupComponent from "@/view/components/PopupComponent.vue";
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
 const resultMessage = computed(() => {
   let causeMessage: string = ""
-  let result = context.value?.state.gameOver
-  if (result !== undefined) {
+  let result = context.value?.gameState.gameOver
+  if (result) {
     switch (result.cause) {
       case GameOverCause.Timeout: causeMessage = "Timeout!"; break;
       case GameOverCause.Checkmate: causeMessage = "Checkmate!"; break;
       case GameOverCause.Stalemate: causeMessage = "Stalemate..."; break;
     }
-    if (result.winner === undefined) {
+    if (!result.winner) {
       return { cause: causeMessage, result: "It's a par..." }
-    } else if (result.winner === context.value?.state.perspectiveOfThisPlayer()?.team) {
+    } else if (result.winner.team === context.value?.thisPerspective.team()) {
       return { cause: causeMessage, result: "You won!" }
-    } else if (result.winner === context.value?.state.perspectiveOfOpponentPlayer()?.team) {
+    } else if (result.winner.team === context.value?.opponentPerspective.team()) {
       return { cause: causeMessage, result: "You lost..." }
     }
   }

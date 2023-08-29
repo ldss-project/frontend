@@ -5,15 +5,15 @@ import PopupComponent from "@/view/components/PopupComponent.vue";
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
-const errorDescription = computed(() => context.value.server.error?.description)
+const errorMessage = computed(() => context.value?.error?.message)
 </script>
 
 <template>
   <PopupComponent class="error-popup" header="Server Error">
     <template #content>
-      <p>{{ errorDescription ?? "" }}</p>
+      <p>{{ errorMessage ?? "" }}</p>
     </template>
     <template #footer>
       <ButtonLinkComponent

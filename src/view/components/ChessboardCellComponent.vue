@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import {PieceImages} from "@/assets/piece-image";
 import {type Position} from "@/logic/proxies/game/data/position";
+import {type Piece} from "@/logic/proxies/game/data/piece";
 import {Ranks} from "@/logic/proxies/game/data/rank";
 import {type Move} from "@/logic/proxies/game/data/move";
 import {Files} from "@/logic/proxies/game/data/file";
-import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import {haveSameParity} from "@/logic/extensions/number-extension";
 import {InjectionKeys} from "@/injection-keys";
 import {isEqual} from "lodash";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
 const props = defineProps<{
   position: Position,
-  forcePiece?: EnrichedPiece,
+  forcePiece?: Piece,
   noEffects?: boolean
 }>()
 
-const piece = computed(() => props.forcePiece ?? context.value?.state.pieceAt(props.position))
+const piece = computed(() => props.forcePiece ?? context.value?.pieceAt(props.position))
 const pieceImage = computed(() => PieceImages.of(piece.value))
-const move = computed(() => context.value?.state.perspectiveOfThisPlayer()?.moveAt(props.position))
+const move = computed(() => context.value?.thisPerspective.moveAt(props.position))
 
 const isPiece = computed(() => !!piece.value && !!pieceImage.value)
 const isAvailableMove = computed(() => !!move.value)
@@ -29,12 +29,12 @@ const isStandardMove = computed(() => !isPiece.value && isAvailableMove.value)
 const isSelected = computed(() => {
   return effectsEnabled() &&
          isEqual(
-           context.value?.state.perspectiveOfThisPlayer()?.selectedPosition,
+           context.value?.thisPerspective.selectedPosition,
            props.position
          )
 })
 const isLastMove = computed(() => {
-  const latestMove: Move | undefined = context.value?.state.nextPerspective().history.at(-1)
+  const latestMove: Move | undefined = context.value?.perspectiveOfNextTurn().moveHistory().at(-1)
   return effectsEnabled() &&
          (isEqual(latestMove?.from, props.position) || isEqual(latestMove?.to, props.position))
 })
