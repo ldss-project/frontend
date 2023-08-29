@@ -8,17 +8,17 @@ import ChessCellComponent from "@/view/components/ChessboardCellComponent.vue";
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
 defineEmits(['cell-clicked'])
 
 const orderedRanks = computed(() =>
-  context.value?.state.perspectiveOfThisPlayer()?.team === Team.White
+  context.value?.thisPerspective.team() === Team.White
   ? Ranks.values().reverse()
   : Ranks.values()
 )
 const orderedFiles = computed(() =>
-  context.value?.state.perspectiveOfThisPlayer()?.team === Team.White
+  context.value?.thisPerspective.team() === Team.White
   ? Files.values()
   : Files.values().reverse()
 )

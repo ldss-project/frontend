@@ -1,35 +1,52 @@
 <script setup lang="ts">
 import {injectStrict} from "@/logic/extensions/vue-extension";
 import {Durations} from "@/logic/proxies/game/data/duration";
+import {Team} from "@/logic/proxies/game/data/team";
+import {Players} from "@/logic/proxies/game/data/player";
+import {Option} from "@/logic/extensions/option-extension";
 import {InjectionKeys} from "@/injection-keys";
 import {computed} from "vue";
 
-const context = injectStrict(InjectionKeys.GameContext)
+const context = injectStrict(InjectionKeys.ChessGameServer)
 
 const props = withDefaults(defineProps<{
-  playerName?: string,
+  team?: Team,
 }>(), {
-  playerName: "PlayerNamePlaceholder"
+  team: Team.White
 })
 
 const formatter = (n: number) => n.toLocaleString(undefined, {minimumIntegerDigits: 2})
 
+const playerName = computed(() =>
+  Option.of(context.value?.perspectiveOfTeam(props.team).player())
+        .filter(_ => !Players.isGuest(_))
+        .map(_ => _.name)
+        .getOrElse(`${props.team === Team.White ? "White" : "Black"}Player`)
+)
 const timeRemainingString = computed(() => {
-  const timeRemaining = context.value?.state.perspectiveOfPlayer(props.playerName)?.time
-  if (timeRemaining !== undefined) {
+  const timeRemaining =
+    context.value?.perspectiveOfTeam(props.team).time()
+    ?? context.value?.gameState.configuration.timeConstraint?.time
+  if (timeRemaining) {
     const timeRemainingAsDate: Date = new Date(Durations.toMilliSeconds(timeRemaining))
     const hours: string = formatter(timeRemainingAsDate.getUTCHours())
     const minutes: string = formatter(timeRemainingAsDate.getUTCMinutes())
     const seconds: string = formatter(timeRemainingAsDate.getUTCSeconds())
     return `${hours}:${minutes}:${seconds}`
   } else {
-    return ""
+    return "--:--:--"
   }
 })
 </script>
 
 <template>
-  <div class="player-info">
+  <div
+    class="player-info"
+    :class="{
+      'player-info-black': team === Team.Black,
+      'player-info-white': team === Team.White,
+    }"
+  >
     <p>{{ playerName }}</p>
     <p>{{ timeRemainingString }}</p>
   </div>
