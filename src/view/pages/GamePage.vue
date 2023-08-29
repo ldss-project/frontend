@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {chessGamePlaceholder} from "@/assets/placeholders";
+import {GameSituationType} from "@/logic/proxies/game/data/game-situation-type";
+import {ServerSituation} from "@/logic/proxies/game/data/server-situation";
 import {type Position} from "@/logic/proxies/game/data/position";
-import {ChessGameSituationType} from "@/logic/proxies/game/data/situation";
-import {ChessGameServerState} from "@/logic/proxies/game/data/server";
-import {EnrichedChessGame} from "@/logic/proxies/game/data/enriched/game";
-import {EnrichedPiece} from "@/logic/proxies/game/data/enriched/piece";
+import {PromotionChoice} from "@/logic/proxies/game/data/promotion-choice";
+import {RelativeChessGameServer} from "@/logic/proxies/game/data/enriched/relative-chess-game-server";
+import {Team, Teams} from "@/logic/proxies/game/data/team";
 import {Option} from "@/logic/extensions/option-extension";
+import {injectStrict} from "@/logic/extensions/vue-extension";
 import PlayerInfoComponent from "@/view/components/PlayerInfoComponent.vue";
 import ChessboardComponent from "@/view/components/ChessboardComponent.vue";
 import ErrorPopupComponent from "@/view/components/ErrorPopupComponent.vue";
@@ -15,46 +16,135 @@ import PromotionPopupComponent from "@/view/components/PromotionPopupComponent.v
 import {InjectionKeys} from "@/injection-keys";
 import {computed, onMounted, onUnmounted, provide, type Ref, ref} from "vue";
 
-const chessGame = ref(EnrichedChessGame.none)
-provide(InjectionKeys.GameContext, chessGame as Ref<EnrichedChessGame>)
+import router from "@/router";
+
+const chessGameService = injectStrict(InjectionKeys.ChessGameService)
+const chessGameServer = ref(RelativeChessGameServer.none)
+provide(InjectionKeys.ChessGameServer, chessGameServer as Ref<RelativeChessGameServer>)
 
 onMounted(() => {
-  /* TODO connect to game service websocket */
-  chessGame.value = new EnrichedChessGame(
-      chessGamePlaceholder(),
-      "PlayerWhite" /* TODO get actual username */
-  )
+  chessGameService.value
+    .playerConnection()
+    .ifPresent(async playerConnection => {
+      await playerConnection.opened()
+      playerConnection
+        .onMessage(message => {
+          console.log(message.data)
+          const data = JSON.parse(message.data)
+          Option.of(data.methodCall).ifPresent(methodCall => {
+            switch (methodCall.method) {
+              case "GetState":
+                chessGameServer.value = new RelativeChessGameServer(
+                    chessGameService.value
+                      .playerConnection()
+                      .flatMap(_ => _.player())
+                      .map(_ => _.team)
+                      .getOrElse(Team.White),
+                    methodCall.output.serverState
+                )
+                break;
+              case "FindMoves":
+                Option.of(chessGameServer.value).ifPresent(_ =>
+                    _.thisPerspective.availableMoves = methodCall.output.moves
+                )
+                break;
+              case "JoinGame":
+              case "ApplyMove":
+              case "Promote":
+            }
+        })
+        Option.of(data.event).ifPresent(event =>
+          Option.of(chessGameServer.value).ifPresent(serverState => {
+            switch (event.type) {
+              case "ChessboardUpdateEvent":
+                serverState.gameState.chessboard = event.payload
+                break;
+              case "GameOverUpdateEvent":
+                serverState.gameState.gameOver = event.payload
+                break;
+              case "GameSituationUpdateEvent":
+                serverState.gameState.situation = event.payload
+                break;
+              case "MoveHistoryUpdateEvent":
+                serverState.gameState.moveHistory = event.payload
+                break;
+              case "WhitePlayerUpdateEvent":
+                serverState.gameState.configuration.whitePlayer = event.payload
+                break;
+              case "BlackPlayerUpdateEvent":
+                serverState.gameState.configuration.blackPlayer = event.payload
+                break;
+              case "WhiteTimerUpdateEvent":
+                serverState.gameState.timers.white = event.payload
+                break;
+              case "BlackTimerUpdateEvent":
+                serverState.gameState.timers.black = event.payload
+                break;
+              case "TurnUpdateEvent":
+                serverState.gameState.currentTurn = event.payload
+                break;
+              case "ServerErrorUpdateEvent":
+                serverState.error = event.payload
+                break;
+              case "ServerSituationUpdateEvent":
+                serverState.situation = event.payload
+                if (serverState.situation === ServerSituation.Terminated && !serverState.gameState.gameOver){
+                  serverState.error = {
+                    type: "ServerTerminatedException",
+                    message: "The server terminated abruptly.",
+                  }
+                }
+                break;
+              case "SubscriptionUpdateEvent":
+                serverState.subscriptions = event.payload
+                break;
+            }
+          })
+        )
+      })
+      .getState()
+    })
+    .ifEmpty(() => router.push({ name: "homepage" }))
 })
-onUnmounted(() => { /* TODO disconnect from game service websocket */ })
+
+onUnmounted(() => {
+  chessGameService.value
+    .playerConnection()
+    .ifPresent(_ => _.close())
+})
 
 const isWaitingForPlayers = computed(() =>
-  chessGame.value?.server.state === ChessGameServerState.WaitingForPlayers
+    chessGameServer.value?.situation === ServerSituation.WaitingForPlayers
 )
-const isGameOver = computed(() => !!chessGame.value?.state.gameOver)
-const hasError = computed(() => !!chessGame.value?.server.error)
+const isGameOver = computed(() => !!chessGameServer.value?.gameState.gameOver)
+const hasError = computed(() => !!chessGameServer.value?.error)
 const isPromotion = computed(() =>
-  Option.of(chessGame.value?.state)
-        .filter(_ => _.situation?.type === ChessGameSituationType.Promotion && _.isTurnOfThisPlayer())
+  Option.of(chessGameServer.value)
+        .filter(_ => _.thisPerspective.isTurnOwner() && _.gameState.situation?.type === GameSituationType.Promotion)
         .present()
 )
+const thisPlayerTeam = computed(() => chessGameServer.value?.thisPerspective.team() ?? Team.White)
 
 function onCellClicked(position: Position){
-  console.log(position)
-
-  Option.of(chessGame.value?.state.perspectiveOfThisPlayer()).ifPresent(_ => {
-    _.selectedPosition = undefined
-    if (_.pieceAt(position) !== undefined) {
-      _.selectedPosition = position
-      /* TODO call find moves on game service websocket */
-    } else if (_.moveAt(position) !== undefined) {
-      /* TODO call apply move on game service websocket */
-    }
-  })
+  chessGameService.value.playerConnection().ifPresent(playerConnection =>
+    Option.of(chessGameServer.value?.thisPerspective).ifPresent(playerPerspective => {
+      playerPerspective.selectedPosition = undefined
+      let selectedMove = playerPerspective.moveAt(position)
+      if (chessGameServer.value?.pieceAt(position, playerPerspective.team()) !== undefined) {
+        playerPerspective.selectedPosition = position
+        playerConnection.findMoves(playerPerspective.selectedPosition)
+      } else if (selectedMove !== undefined) {
+        playerConnection.applyMove(selectedMove)
+        playerPerspective.availableMoves = []
+      }
+    })
+  )
 }
 
-function onPromotionPieceChosen(piece: EnrichedPiece){
-  console.log(piece.type)
-  /* TODO call promote on game service websocket */
+function onPromotionPieceChosen(promotionChoice: PromotionChoice){
+  chessGameService.value.playerConnection().ifPresent(playerConnection => {
+    playerConnection.promote(promotionChoice)
+  })
 }
 </script>
 
@@ -63,15 +153,9 @@ function onPromotionPieceChosen(piece: EnrichedPiece){
   <GameOverPopupComponent v-else-if="isGameOver" />
   <LobbyPopupComponent v-else-if="isWaitingForPlayers" />
   <PromotionPopupComponent v-else-if="isPromotion" @promotion-piece-chosen="onPromotionPieceChosen"/>
-  <PlayerInfoComponent
-    class="player-info-black"
-    :player-name="chessGame?.state.black.player.username"
-  />
+  <PlayerInfoComponent :team="Teams.opponent(thisPlayerTeam)" />
   <ChessboardComponent @cell-clicked="onCellClicked" />
-  <PlayerInfoComponent
-    class="player-info-white"
-    :player-name="chessGame?.state.white.player.username"
-  />
+  <PlayerInfoComponent :team="thisPlayerTeam" />
 </template>
 
 <style lang="scss" scoped>
