@@ -1,11 +1,16 @@
+import {TimeConstraintType} from "@/logic/proxies/game/data/time-constraint-type";
+import {type Duration} from "@/logic/proxies/game/data/duration";
+
 /**
- * A constraint on the time during a {@link ChessGame}.
+ * A constraint on the time available to the
+ * {@link Player}s during a {@link ChessGame}.
  */
-export enum TimeConstraint {
-  /** No {@link TimeConstraint}s. */
-  NoLimit = 'NoLimit',
-  /** A {@link TimeConstraint} where the timer of a {@link Player} refreshes at every {@link Move}. */
-  MoveLimit = 'MoveLimit',
-  /** A {@link TimeConstraint} where the timer of a {@link Player} never refreshes. */
-  PlayerLimit = 'PlayerLimit'
+export interface TimeConstraint {
+  /** The {@link TimeConstraintType} of this {@link TimeConstraint}. */
+  type: TimeConstraintType,
+  /**
+   * The duration of the timers of the {@link Player}s by this
+   * {@link TimeConstraint}. Absent for {@link TimeConstraintType.NoLimit NoLimit}.
+   */
+  time?: Duration
 }

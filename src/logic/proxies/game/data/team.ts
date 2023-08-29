@@ -1,9 +1,9 @@
 /** A team in a {@link ChessGame}. */
 export enum Team {
   /** The white {@link Team}. */
-  White = "White",
+  White = "WHITE",
   /** The black {@link Team}. */
-  Black = "Black",
+  Black = "BLACK"
 }
 export namespace Teams {
   /**
