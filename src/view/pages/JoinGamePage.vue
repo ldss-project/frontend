@@ -2,7 +2,15 @@
 import {FormCause, FormError, validateGameId} from "@/logic/extensions/form-extension";
 import ButtonComponent from "@/view/components/ButtonComponent.vue";
 import ErrorText from "@/view/components/ErrorText.vue";
+import {ChessGameErrorType} from "@/logic/proxies/game/data/chess-game-error";
+import {Team} from "@/logic/proxies/game/data/team";
+import {injectStrict} from "@/logic/extensions/vue-extension";
+import {InjectionKeys} from "@/injection-keys";
 import {ref} from "vue";
+import router from "@/router";
+
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
+const chessGameService = injectStrict(InjectionKeys.ChessGameService)
 
 const form = ref({
   gameId: "",
@@ -11,14 +19,63 @@ const form = ref({
 
 function joinPublicGame(event: Event) {
   event.preventDefault()
-  // TODO join public game
+  chessGameService.value
+    ?.connectToPublicGame()
+    .then(_ => _
+      .ifSuccess(async playerConnection => {
+        await playerConnection.opened()
+        playerConnection.joinGame({
+          team: Team.Black,
+          name: authenticationService.value.sessionManager().sessionUsername().get()
+        })
+        await router.push({name: "game"})
+      })
+      .ifFailure(error => {
+        switch (error.type) {
+          case ChessGameErrorType.NoAvailableGamesException:
+            form.value.error = new FormError("", "No available public games.")
+            break;
+          default:
+            console.error(error)
+        }
+      })
+    )
 }
 
 function joinPrivateGame(event: Event) {
   event.preventDefault()
   console.log(form.value)
   if (validateForm()){
-    // TODO join private game
+    chessGameService.value
+      ?.connectToPrivateGame(form.value.gameId)
+      .then(_ => _
+        .ifSuccess(async playerConnection => {
+          await playerConnection.opened()
+          playerConnection.joinGame({
+            team: Team.Black,
+            name: authenticationService.value.sessionManager().sessionUsername().get()
+          })
+          await router.push({name: "game"})
+        })
+        .ifFailure(error => {
+          switch (error.type) {
+            case ChessGameErrorType.GameAlreadyStartedException:
+              form.value.error = new FormError(
+                FormCause.GameId,
+                `Game ${form.value.gameId} has already started.`
+              )
+              break;
+            case ChessGameErrorType.GameNotFoundException:
+              form.value.error = new FormError(
+                FormCause.GameId,
+                `Game ${form.value.gameId} does not exist.`
+              )
+              break;
+            default:
+              console.error(error)
+          }
+        })
+      )
   }
 }
 
