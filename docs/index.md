@@ -33,7 +33,9 @@ nav_order: 1
 
 ### Game
 
-![Game Mockup](/frontend/resources/images/game-mockup.png)
+![Running Game Mockup](/frontend/resources/images/game-mockup-running.png)
+![Promotion Game Mockup](/frontend/resources/images/game-mockup-promotion.png)
+![Terminated Game Mockup](/frontend/resources/images/game-mockup-terminated.png)
 
 ### Join game
 
