@@ -21,7 +21,7 @@ nav_order: 1
 
 ### Sign in
 
-![Signin Mockup](/frontend/resources/images/sign-mockup.png)
+![Signin Mockup](/frontend/resources/images/signin-mockup.png)
 
 ### Profile
 
