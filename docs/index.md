@@ -58,6 +58,7 @@ nav_order: 1
 ### Log in
 
 ![Login Screenshot](/frontend/resources/images/screenshots/login-screenshot.png)
+![Login Error Screenshot](/frontend/resources/images/screenshots/login-error-screenshot.png)
 
 ### Sign in
 
