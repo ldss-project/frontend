@@ -7,12 +7,6 @@ nav_order: 1
 # Frontend
 {: .no_toc}
 
-## Contenuti
-{: .no_toc}
-
-- TOC
-{:toc}
-
 ---
 
 ## Descrizione
