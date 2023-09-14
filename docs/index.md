@@ -77,7 +77,7 @@ La schermata prevede due aree principali:
   Il corpo della schermata è un elemento condiviso tra tutte le schermate dell'applicazione,
   ma in ogni schermata racchiude un contenuto diverso.
 
-### Log in 
+### Log-in Page 
 
 Di seguito si riporta il mockup progettato per la **Log-in Page**.
 
@@ -98,7 +98,7 @@ credenziali non fossero corrette, un messaggio di errore viene mostrato all'uten
 Il form contiene anche un pulsante **Sign In** che, se cliccato, reindirizza l'utente
 alla **Sign-in Page**, permettendogli di registrarsi all'applicazione.
 
-### Sign in
+### Sign-in Page
 
 Di seguito si riporta il mockup progettato per la **Sign-in Page**.
 
@@ -118,7 +118,7 @@ pulsante **Submit**, registrandosi all'interno dell'applicazione. Nel caso in cu
 informazioni non fossero valide, un messaggio di errore viene mostrato all'utente
 (il testo in rosso nel mockup).
 
-### Profile
+### Profile Page
 
 Di seguito si riporta il mockup progettato per la **Profile Page**.
 
@@ -142,7 +142,7 @@ all'utente di modificare la propria password attraverso l'inserimento dei campi 
 Una volta compilati questi campi, l'utente può cliccare il pulsante **Update** del form esteso per
 aggiornare la propria password con quella nuova specificata.
 
-### Create game
+### Create Game Page
 
 Di seguito si riporta il mockup progettato per la **Create Game Page**.
 
@@ -172,7 +172,7 @@ specificata cliccando il pulsante **Create Game**. Nel caso in cui la configuraz
 non fosse valida, un messaggio di errore viene mostrato all'utente (il testo in rosso
 nel mockup).
 
-### Join game
+### Join Game Page
 
 Di seguito si riporta il mockup progettato per la **Join Game Page**.
 
@@ -185,12 +185,13 @@ partita nell'applicazione:
 - **Join**: permette di partecipare alla partita privata con l'identificatore specificato
   nel riquadro adiacente.
 
-### Game
+### Game Page
 
 Di seguito si riportano i mockup progettati per la **Game Page**. In particolare, i
 mockup mostrano la schermata nelle varie situazioni di una partita di scacchi.
 
-#### Running Game
+#### Running
+{: .no_toc}
 
 Di seguito, si riporta il mockup della **Game Page** durante l'esecuzione di una
 partita di scacchi.
@@ -221,7 +222,8 @@ per eseguirla.
 Se un giocatore esce dalla schermata della partita, automaticamente si disconnetterà
 da tale partita.
 
-#### Promotion Game
+#### Promotion
+{: .no_toc}
 
 Di seguito, si riporta il mockup della **Game Page** durante la promozione di un pedone.
 
@@ -234,7 +236,8 @@ possibili alternative per la promozione, ovvero cavallo, alfiere, torre o regina
 Il giocatore di turno può cliccare una di quelle caselle per promuovere il proprio pedone
 al pezzo mostrato da tale casella.
 
-#### Terminated Game
+#### Terminated
+{: .no_toc}
 
 Di seguito, si riporta il mockup della **Game Page** durante la terminazione di una partita.
 
@@ -244,7 +247,7 @@ Durante la terminazione di una partita, sul corpo della schermata sarà visualiz
 che mostra a ciascun giocatore il proprio risultato e la causa della terminazione della
 partita.
 
-### Leaderboard
+### Leaderboard Page
 
 Di seguito si riporta il mockup progettato per la **Leaderboard Page**.
 
@@ -264,7 +267,7 @@ Le righe della tabella sono ordinate per ordine crescente di **Rank**.
 Inoltre, cliccando sul nome di un giocatore, l'utente viene reindirizzato alla schermata
 delle statistiche di quel giocatore.
 
-### Statistics
+### Statistics Page
 
 Di seguito si riporta il mockup progettato per la **Statistics Page** di un
 giocatore.
@@ -409,41 +412,56 @@ Di seguito, si riporta il diagramma del modulo, comprendendo i due sotto-moduli 
 
 ![Homepage Screenshot](/frontend/resources/images/screenshots/homepage-screenshot.png)
 
-#### Log in
+#### Log-in Page
 
 ![Login Screenshot](/frontend/resources/images/screenshots/login-screenshot.png)
 ![Login Error Screenshot](/frontend/resources/images/screenshots/login-error-screenshot.png)
 
-#### Sign in
+#### Sign-in Page
 
 ![Signin Screenshot](/frontend/resources/images/screenshots/signin-screenshot.png)
 
-#### Profile
+#### Profile Page
 
 ![Profile Screenshot](/frontend/resources/images/screenshots/profile-screenshot.png)
 
-#### Create game
+#### Create Game Page
 
 ![Create Game Screenshot](/frontend/resources/images/screenshots/create-game-screenshot.png)
 
-#### Join game
+#### Join Game Page
 
 ![Join Game Screenshot](/frontend/resources/images/screenshots/join-game-screenshot.png)
 
-#### Game
+#### Game Page
+
+##### Waiting for Players
+{: .no_toc}
 
 ![Game Waiting For Players Screenshot](/frontend/resources/images/screenshots/game-waiting-for-players-screenshot.png)
+
+##### Running
+{: .no_toc}
+
 ![Game Running Screenshot](/frontend/resources/images/screenshots/game-running-screenshot-1.png)
 ![Game Running Some Moves Screenshot](/frontend/resources/images/screenshots/game-running-screenshot-2.png)
-![Game Promotion Screenshot](/frontend/resources/images/screenshots/game-promotion-screenshot.png)
-![Game Over Screenshot](/frontend/resources/images/screenshots/game-terminated-screenshot.png)
 ![Game Error Screenshot](/frontend/resources/images/screenshots/game-error-screenshot.png)
 
-#### Leaderboard
+##### Promotion
+{: .no_toc}
+
+![Game Promotion Screenshot](/frontend/resources/images/screenshots/game-promotion-screenshot.png)
+
+##### Terminated
+{: .no_toc}
+
+![Game Over Screenshot](/frontend/resources/images/screenshots/game-terminated-screenshot.png)
+
+#### Leaderboard Page
 
 ![Leaderboard Screenshot](/frontend/resources/images/screenshots/leaderboard-screenshot.png)
 
-#### Statistics
+#### Statistics Page
 
 ![Statistics Screenshot](/frontend/resources/images/screenshots/statistics-screenshot.png)
 
