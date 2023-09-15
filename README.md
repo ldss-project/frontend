@@ -7,6 +7,16 @@
 
 ---
 
+## Description
+
 The service that exposes the functionalities of the chess application to the user.
 
 See documentation at the [repository webpage](https://ldss-project.github.io/frontend).
+
+## Attributions
+
+Some of the resources used within this project were made by others. Here's a list of the attributions:
+
+- **Application Logo**: made by [Freepik - Flaticon](https://www.flaticon.com/authors/Freepik).
+- **Chess Pieces**: made starting from the outlines provided by
+  [deemakdaksina - Flaticon](https://www.flaticon.com/authors/deemakdaksina).
