@@ -12,7 +12,7 @@ utilizzare il seguente comando:
 docker run -it -p 8080:8080 jahrim/io.github.jahrim.chess.frontend:<version>
 ```
 
-Dopodiché, il sito è accessibile al seguente URL: http://localhost:8080.
+Dopodiché, il servizio è accessibile al seguente URL: http://localhost:8080.
 
 L'esecuzione del servizio è configurabile specificando la variabile d'ambiente `VITE_RUNTIME_ENVIRONMENT`,
 che permette di indicare gli host dei servizi da cui il **Frontend** dipende. In particolare, il contenuto
@@ -27,9 +27,9 @@ della variabile deve essere un [JSON](https://www.json.org/json-en.html) con i s
 ```
 
 Per quanto riguarda l'esecuzione dell'intera applicazione, comprendendo il **Frontend** ed i servizi da cui
-dipende, il repository predispone e pubblica un opportuno ```docker-compose.yml``` file, che può essere
-eseguito tramite [Docker](https://www.docker.com/). La descrizione esatta su come eseguire l'intera applicazione
-è resa disponibile al seguente [link](/docs/3-deployment).
+dipende, il repository predispone e pubblica un opportuno ```docker-compose.yml``` file.
+
+La descrizione esatta su come eseguire l'intera applicazione è resa disponibile al seguente [link](/docs/1-devops/3-deployment).
 
 ---
 
