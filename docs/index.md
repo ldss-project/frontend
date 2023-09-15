@@ -18,5 +18,7 @@ che espone le funzionalità dei servizi seguenti:
 [statistics-service](https://github.com/ldss-project/statistics-service) e 
 [chess-game-service](https://github.com/ldss-project/chess-game-service).
 
+---
+
 [Back to Top](#top) |
 [Next Chapter](/frontend/0-mockup)

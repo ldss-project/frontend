@@ -249,7 +249,7 @@ Di seguito si riporta il mockup progettato per la **Leaderboard Page**.
 ![Leaderboard Mockup](/frontend/resources/images/mockups/leaderboard-mockup.png)
 
 Il corpo della schermata contiene una tabella che mostra i giocatori dell'applicazione
-ed i loro punteggi. In particolare, ogni riga della tabella corrisponde a un giocatore
+e i loro punteggi. In particolare, ogni riga della tabella corrisponde a un giocatore
 e descrive i seguenti campi:
 - **Rank**: la posizione in classifica del giocatore.
 - **Name**: il nome del giocatore nell'applicazione.
