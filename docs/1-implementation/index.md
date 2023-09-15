@@ -134,15 +134,15 @@ Tale configurazione è stata suddivisa in tre file:
 
 Il modulo **View** gestisce la presentazione grafica dell'applicazione.
 
-Di seguito, si riporta il diagramma del modulo, comprendendo i due sotto-moduli **Pages** e
+Di seguito, si riporta il diagramma del modulo, inclusi i due sotto-moduli **Pages** e
 **Components** e le loro interazioni con il modulo **Proxies**.
 
 ![View Module Class Diagram](/frontend/resources/images/implementation/frontend-view.png)
 
 Come mostrato in figura, l'entrypoint dell'interfaccia grafica è la `App`, che agisce da
 scheletro dell'interfaccia, mostrando tutti gli elementi grafici comuni alle schermate
-dell'applicazione (tra cui la barra di navigazione, modellata dal componente `NavBarComponent`)
-e renderizzando tali schermate sulla base della rotta in cui si trova l'utente. Inoltre, la
+dell'applicazione (ad esempio, la barra di navigazione) e renderizzando tali schermate sulla
+base della rotta in cui si trova l'utente. Inoltre, la
 `App` crea le istanze dei proxy che saranno utilizzati dal servizio, fornendole ai diversi
 componenti dell'applicazione tramite un meccanismo di _dependency injection_.
 
@@ -160,7 +160,7 @@ In maggior dettaglio, i componenti vue realizzati per le schermate dell'applicaz
 - `NotFoundPage`: una schermata di errore utilizzata per notificare all'utente che la rotta da lui
   indicata non è implementata dall'applicazione.
 
-Di seguito, si descriverà scenderà nel dettaglio dell'implementazione di tali componenti e dei
+Di seguito, si scenderà nel dettaglio dell'implementazione di tali componenti e dei
 loro sotto-componenti.
 
 #### HomePage
@@ -193,7 +193,7 @@ dal `NavBarComponent` sono dei `ButtonLinkComponent`, ovvero un tipo di `ButtonC
 permette di specificare una rotta a cui l'utente sarà reindirizzato quando il pulsante è
 premuto. 
 
-> **Nota** il meccanismo di estensione dei componenti vue è stato realizzato tramite composizione.
+> **Nota**: il meccanismo di estensione dei componenti vue è stato realizzato tramite composizione.
 
 Quando l'utente è reindirizzato verso una specifica rotta dell'applicazione, la `App`
 carica il componente corrispondente a tale rotta (specificato all'interno del modulo **Router**)
@@ -228,8 +228,8 @@ Il form permette all'utente di specificare il proprio nome e la propria password
 i cui formati sono verificati attraverso la `form-extension` del modulo **Utility**.
 Inoltre, il form contiene due pulsanti:
 - **Sign In**: è un `ButtonLinkComponent` che reindirizza verso la `SignInPage`;
-- **Log In**: è un `ButtonComponent` che autentica l'utente quando premuto, una volta
-  che il form è stato compilato correttamente.
+- **Log In**: è un `ButtonComponent` che autentica l'utente quando premuto, se il form è
+  stato compilato correttamente.
 
 L'autenticazione è delegata all'`AuthenticationProxy` dell'applicazione, accessibile
 tramite _dependency injection_. In particolare, alla richiesta di autenticazione,
@@ -296,12 +296,12 @@ registrazione, oltre che un campo fittizio rappresentante un placeholder per la 
 
 Alla pressione del `ButtonComponent` **pen-icon** a lato del placeholder per la password,
 il `FormComponent` viene esteso con nuovi campi che permettono all'utente di aggiornare
-la propria password, ovvero **Password** e **Confirm Password**. Cliccando nuovamente la
+la propria password, ovvero **New Password** e **Confirm New Password**. Cliccando nuovamente la
 **pen-icon**, il `FormComponent` tornerà nello stato iniziale.
 
 Una volta compilato il form per aggiornare la password, è possibile premere il pulsante
 **Update** del form esteso per confermare l'operazione. In tal caso, l'aggiornamento della
-password viene delegato all'`AuthenticationProxy`, accessibile sempre per _dipendency injection_,
+password viene delegato all'`AuthenticationProxy`, accessibile sempre per _dependency injection_,
 il quale inoltra la richiesta all'[authentication-service](https://github.com/ldss-project/authentication-service).
 
 Eventuali errori di compilazione del form vengono mostrati all'utente ad ogni tentativo di
@@ -320,7 +320,7 @@ La `CreateGamePage` contiene un `FormComponent` che permette all'utente di confi
 una partita di scacchi, specificandone eventuali vincoli di tempo e la durata di tali
 vincoli. Inoltre, permette di indicare se la partita è pubblica o privata attraverso
 l'opportuna checkbox. In questo secondo caso, il `FormComponent` viene esteso con un
-nuovo campo che permette di specificare l'identificatore della partita. 
+nuovo campo che permette di specificare anche l'identificatore della partita. 
 
 Una volta completata la compilazione del form, l'utente può premere il `ButtonComponent`
 **Create Game** per creare una partita con la configurazione da lui specificata.
@@ -333,7 +333,7 @@ Quindi, il `ChessGameProxy` crea una connessione Websocket verso l'URL ricevuto,
 all'interno dell'applicazione attraverso una `PlayerConnection`, che gestisce la comunicazione tra il
 giocatore e il server di gioco a cui è connesso.
 
-Dopo la connessione con il server di gioco, la `CreateGamePage` invia al server di gioco
+Dopo la connessione con il server di gioco, la `CreateGamePage` invia al server
 una richiesta di partecipazione alla partita come giocatore della squadra bianca. Come
 conseguenza di ciò, i giocatori che ospitano le partite di scacchi appartengono sempre
 alla squadra bianca.
@@ -382,10 +382,10 @@ La `GamePage` è il componente vue che implementa la schermata relativa all'esec
 specifica partita di scacchi. 
 
 In particolare, la `GamePage` mantiene e mostra un proprio stato locale della partita osservata
-dal punto di vista dall'utente, modellato dalla classe `RelativeChessGameServer`. Quindi, fornisce
+dal punto di vista dell'utente, modellato dalla classe `RelativeChessGameServer`. Quindi, fornisce
 tale stato ai suoi componenti, sempre tramite il meccanismo di _dependency injection_.
 
-Il `RelativeChessGameServer` arricchisce lo stato ricevuto dal server di gioco, modellato dalla classe
+Il `RelativeChessGameServer` arricchisce lo stato della partita ricevuto dal server di gioco, modellato dalla classe
 `ChessGameServer`, permettendo di conoscere il giocatore a cui corrisponde l'utente dell'applicazione, quali
 pezzi può controllare, il pezzo attualmente selezionato, quali mosse può eseguire e il punto di vista del suo
 avversario.
@@ -393,7 +393,7 @@ avversario.
 Al caricamento della schermata, la `GamePage` configura la `PlayerConnection` esposta dal `ChessGameProxy`,
 ottenuto tramite _dependency injection_, in modo da aggiornare il `RelativeChessGameServer` ad ogni evento
 ricevuto dal server di gioco, aggiornando di conseguenza anche gli elementi grafici che ne dipendono. Infine,
-si sincronizza al server di gioco richiedendone lo stato.
+la `GamePage` si sincronizza al server di gioco richiedendone lo stato.
 
 La schermata della `GamePage` cambia in base allo stato della partita, come descritto nelle sezioni che seguono.
 
@@ -408,7 +408,7 @@ partita quando ancora nessun altro giocatore sta partecipando alla sua partita.
 
 In questa situazione, la `GamePage` mostra un popup sopra il corpo della schermata, modellato dal componente vue
 `LobbyPopupComponent`, che avverte l'utente di tale situazione e gli permette di tornare nella schermata principale
-attraverso il `ButtonComponent` **Back to Main Menu**, abbandonando la partita.
+attraverso il `ButtonLinkComponent` **Back to Main Menu**, abbandonando la partita.
 
 Il `LobbyPopupComponent` è un particolare tipo del componente vue `PopupComponent`, che generalizza i popup
 utilizzati all'interno dell'applicazione. Il `PopupComponent` è stato realizzato attraverso il componente
@@ -429,7 +429,7 @@ vue `PlayerInfoComponent`.
 Un `PlayerInfoComponent` è associato alla squadra di uno dei due giocatori della partita, che viene utilizzata
 insieme al `RelativeChessGameServer` della `GamePage`, ottenuto per _dependency injection_, per conoscere il nome
 e il tempo rimasto a quel giocatore, oltre che per determinare lo stile del componente. In particolare, la `GamePage`
-posizione i due `PlayerInfoComponent` in modo che le informazioni del giocatore corrispondente all'utente siano sempre
+posiziona i due `PlayerInfoComponent` in modo che le informazioni del giocatore corrispondente all'utente siano sempre
 sotto la scacchiera.
 
 Il `ChessboardComponent` utilizza il `RelativeChessGameServer` della `GamePage` per mostrare lo stato attuale della
@@ -437,16 +437,16 @@ scacchiera rispetto al punto di vista dell'utente. In particolare, posiziona i p
 quelli controllati dall'utente siano sempre in basso, almeno all'inizio della partita.
 
 Alla creazione, il `ChessboardComponent` crea le caselle della scacchiera, modellate dal componente vue
-`ChessboardCellComponent`, associando ogni casella alla sua posizione nella scacchiera e permettendo alla loro
+`ChessboardCellComponent`, associando ogni casella alla sua posizione nella scacchiera e permettendo la loro
 pressione, come se fossero dei pulsanti. 
 
 Ogni `ChessboardCellComponent` gestisce la visualizzazione di una specifica casella della scacchiera, identificata
 dalla sua posizione. In maggior dettaglio, un `ChessboardCellComponent` utilizza il `RelativeChessGameServer` della
 `GamePage` per determinare l'eventuale pezzo da visualizzare nella casella che rappresenta, oltre che il colore della
-casella stessa, che può essere decorativo oppure corrispondere a un determinato effetto applicato sulla casella.
+casella stessa, che corrisponde a un determinato effetto applicato sulla casella.
 
 Per visualizzare un pezzo, un `ChessboardCellComponent` controlla se all'interno del `RelativeChessGameServer` esiste
-un pezzo nella posizione della propria casella, dopodiché converte tale pezzo in un'immagine attraverso l'enumerazione
+un pezzo nella posizione della propria casella, dopodiché converte tale pezzo in un'immagine utilizzando l'enumerazione
 `PieceImage` del modulo **Assets**.
 
 Per visualizzare un effetto, un `ChessboardCellComponent` controlla diverse proprietà relative alla propria posizione,
@@ -456,10 +456,10 @@ i seguenti:
   (entrambi pari o entrambi dispari), la casella è di colore marrone chiaro, altrimenti è di colore marrone scuro;
 - **Last Move Effect**: se la propria posizione è la posizione di partenza o di arrivo dell'ultima mossa registrata
   nello storico delle mosse, la casella è di colore giallo;
-- **Capture Move Effect**: se la propria posizione è la posizione di arrivo di una mossa di cattura disponibile
-  all'utente, la casella è di colore rosso;
 - **Move Effect**: se la propria posizione è la posizione di arrivo di una mossa disponibile all'utente,
   la casella contiene un pallino grigio;
+- **Capture Move Effect**: se la propria posizione è la posizione di arrivo di una mossa di cattura disponibile
+  all'utente, la casella è di colore rosso;
 - **Selected Effect**: se la propria posizione è la posizione del pezzo selezionato dall'utente, la casella è di
   colore verde.
 
@@ -477,14 +477,15 @@ scacchiera. Quindi, la `GamePage` reagisce a tali eventi nei seguenti modi:
 - in ogni altro caso, il pezzo attualmente selezionato dall'utente viene deselezionato e le sue mosse disponibili
   vengono rimosse.
 
-Di seguito, si riporta uno screenshot della `GamePage` dopo l'applicazione di alcune mosse, che mostra i
+Di seguito, si riporta uno screenshot della `GamePage` dopo l'applicazione di alcune mosse, il quale mostra i
 componenti e gli effetti sopra citati.
 
 ![Game Running Some Moves Screenshot](/frontend/resources/images/screenshots/game-running-screenshot-2.png)
 
 Nel caso in cui il server di gioco generi un'eccezione che impedisca il proseguimento della partita (ad esempio,
 uno dei giocatori abbandona la partita), la `GamePage` mostra un popup con la descrizione dell'errore generato
-dal server, modellato dal componente vue `ErrorPopupComponent`.
+dal server, modellato dal componente vue `ErrorPopupComponent`. L'`ErrorPopupComponent` permette di tornare nella
+schermata principale dell'applicazione attraverso il `ButtonLinkComponent` **Back to Main Menu**.
 
 Di seguito, si riporta uno screenshot della `GamePage` dopo l'abbandono della partita da parte di uno dei due
 giocatori.
@@ -523,7 +524,7 @@ seguente screenshot.
 
 In questa situazione, la `GamePage` mostra un popup che indica all'utente la causa di terminazione della
 partita e il risultato ottenuto nella partita, modellato dal componente vue `GameOverPopupComponent`. Inoltre,
-gli permette di tornare alla schermata principale dell'applicazione tramite l'apposito `ButtonComponent` con il
+gli permette di tornare alla schermata principale dell'applicazione tramite l'apposito `ButtonLinkComponent` con il
 nome **Back to Main Menu**.
 
 Il `GameOverPopupComponent` si affida al `RelativeChessGameServer` per conoscere le cause di terminazione della
@@ -536,7 +537,7 @@ della classifica globale dei giocatori.
 
 La rappresentazione grafica della `LeaderboardPage` è mostrata dal seguente screenshot.
 
-![Login Screenshot](/frontend/resources/images/screenshots/login-screenshot.png)
+![Leaderboard Screenshot](/frontend/resources/images/screenshots/leaderboard-screenshot.png)
 
 La `LeaderboardPage` contiene la classifica globale dei giocatori, modellata come una tabella,
 le cui righe sono popolate con i nomi dei giocatori dell'applicazione e i relativi punteggi.
@@ -555,8 +556,6 @@ richiede la valutazione della classifica in un certo intervallo allo
 
 La classifica viene valutata sia al caricamento della schermata che ad ogni modifica del
 **First Displayed Rank**.
-
-![Leaderboard Screenshot](/frontend/resources/images/screenshots/leaderboard-screenshot.png)
 
 #### StatisticsPage
 
