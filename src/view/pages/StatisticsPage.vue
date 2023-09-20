@@ -35,6 +35,7 @@ import {InjectionKeys} from "@/injection-keys";
 import {onMounted, ref} from "vue";
 import router from "@/router";
 
+const authenticationService = injectStrict(InjectionKeys.AuthenticationService)
 const statisticsService = injectStrict(InjectionKeys.StatisticsService)
 
 const userScoreHistory = ref<UserScoreHistory>({
@@ -50,7 +51,11 @@ onMounted(() => {
       .ifFailure(error => {
         switch (error.type) {
           case StatisticsErrorType.UserNotFoundException:
-            router.push({name: "not-found"})
+            authenticationService.value
+              .sessionManager()
+              .sessionUsername()
+              .filter(_ => _ === userScoreHistory.value.username)
+              .ifEmpty(() => router.push({name: "not-found"}))
             break;
           default:
             console.log(error)
@@ -90,8 +95,8 @@ const chartOptions = {
       <input
         class="form-control"
         id="rank"
-        type="number"
-        :value="userScoreHistory.latestScores.at(-1)?.rank"
+        type="text"
+        :value="userScoreHistory.latestScores.at(-1)?.rank ?? 'n/a'"
         autocomplete="off"
         disabled
       />
@@ -105,8 +110,8 @@ const chartOptions = {
       <input
         class="form-control"
         id="wins"
-        type="number"
-        :value="userScoreHistory.latestScores.at(-1)?.wins"
+        type="text"
+        :value="userScoreHistory.latestScores.at(-1)?.wins ?? 'n/a'"
         autocomplete="off"
         disabled
       />
@@ -120,8 +125,8 @@ const chartOptions = {
       <input
         class="form-control"
         id="losses"
-        type="number"
-        :value="userScoreHistory.latestScores.at(-1)?.losses"
+        type="text"
+        :value="userScoreHistory.latestScores.at(-1)?.losses ?? 'n/a'"
         autocomplete="off"
         disabled
       />
@@ -135,8 +140,8 @@ const chartOptions = {
       <input
         class="form-control"
         id="ratio"
-        type="number"
-        :value="userScoreHistory.latestScores.at(-1)?.ratio"
+        type="text"
+        :value="userScoreHistory.latestScores.at(-1)?.ratio ?? 'n/a'"
         autocomplete="off"
         disabled
       />
