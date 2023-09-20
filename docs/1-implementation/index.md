@@ -579,10 +579,17 @@ Al caricamento della schermata, la `StatisticsPage` dichiara una dipendenza con 
 che utilizza per ottenere lo storico dei punteggi del giocatore. In particolare, lo `StatisticsProxy`
 richiede la valutazione dello storico dei punteggi del giocatore (incluso l'ultimo punteggio aggiornato)
 allo [statistics-service](https://github.com/ldss-project/statistics-service), inoltrando la risposta alla
-`LeaderboardPage`.
+`StatisticsPage`.
 
 Lo storico dei punteggi del giocatore viene richiesto al caricamento della schermata per mostrare l'ultimo
 punteggio del giocatore e l'andamento del suo ratio nel tempo.
+
+Nel caso in cui nessun punteggio fosse registrato per il giocatore, se le statistiche appartengono all'utente
+saranno mostrati dei dati placeholder, altrimenti l'utente sarà reindirizzato alla `NotFoundPage`. 
+
+Per sapere se le statistiche appartengono all'utente, la `StatisticsPage` dichiara una dipendenza con
+l'`AuthenticationProxy`, che utilizza per accedere alla sessione dell'utente, quindi potendo confrontare il
+nome dell'utente con il nome del giocatore di cui sono state richieste le statistiche.
 
 #### NotFoundPage
 
