@@ -48,7 +48,7 @@
     "eslint": "^8.39.0",
     "eslint-plugin-vue": "^9.11.0",
     "jsdom": "^22.1.0",
-    "npm-run-all": "^4.1.2",
+    "npm-run-all2": "^5.0.0",
     "prettier": "^2.8.8",
     "sass": "^1.63.6",
     "sass-loader": "^13.3.2",
